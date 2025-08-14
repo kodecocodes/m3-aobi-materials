@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 70;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		271ABA532E480A940063DBC4 /* OTelSpans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271ABA522E480A940063DBC4 /* OTelSpans.swift */; };
+		271ABA552E480BDA0063DBC4 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271ABA542E480BDA0063DBC4 /* Common.swift */; };
+		271ABA582E480F9F0063DBC4 /* ResourceExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 271ABA572E480F9F0063DBC4 /* ResourceExtension */; };
+		27745F302E47C19D0071E4CB /* OpenTelemetryApi in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F2F2E47C19D0071E4CB /* OpenTelemetryApi */; };
+		27745F322E47C19D0071E4CB /* OpenTelemetryProtocolExporter in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F312E47C19D0071E4CB /* OpenTelemetryProtocolExporter */; };
+		27745F342E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F332E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP */; };
+		27745F362E47C19D0071E4CB /* OpenTelemetrySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F352E47C19D0071E4CB /* OpenTelemetrySdk */; };
+		27745F392E47C1AA0071E4CB /* OTelMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27745F372E47C1AA0071E4CB /* OTelMetrics.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		18D775BD22AD944300AE281E /* TheMet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		271ABA522E480A940063DBC4 /* OTelSpans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelSpans.swift; sourceTree = "<group>"; };
+		271ABA542E480BDA0063DBC4 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		27745F372E47C1AA0071E4CB /* OTelMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelMetrics.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CD047DF02CED59DA00782EDE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 18D775BC22AD944300AE281E /* TheMet */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		CD047DE22CED59DA00782EDE /* TheMet */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (CD047DF02CED59DA00782EDE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TheMet; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18D775BA22AD944300AE281E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27745F302E47C19D0071E4CB /* OpenTelemetryApi in Frameworks */,
+				271ABA582E480F9F0063DBC4 /* ResourceExtension in Frameworks */,
+				27745F342E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP in Frameworks */,
+				27745F322E47C19D0071E4CB /* OpenTelemetryProtocolExporter in Frameworks */,
+				27745F362E47C19D0071E4CB /* OpenTelemetrySdk in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18D775B422AD944300AE281E = {
+			isa = PBXGroup;
+			children = (
+				27745F382E47C1AA0071E4CB /* Observability */,
+				CD047DE22CED59DA00782EDE /* TheMet */,
+				271ABA562E480F9F0063DBC4 /* Frameworks */,
+				18D775BE22AD944300AE281E /* Products */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+		};
+		18D775BE22AD944300AE281E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18D775BD22AD944300AE281E /* TheMet.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		271ABA562E480F9F0063DBC4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		27745F382E47C1AA0071E4CB /* Observability */ = {
+			isa = PBXGroup;
+			children = (
+				271ABA542E480BDA0063DBC4 /* Common.swift */,
+				27745F372E47C1AA0071E4CB /* OTelMetrics.swift */,
+				271ABA522E480A940063DBC4 /* OTelSpans.swift */,
+			);
+			path = Observability;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		18D775BC22AD944300AE281E /* TheMet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18D775D122AD944400AE281E /* Build configuration list for PBXNativeTarget "TheMet" */;
+			buildPhases = (
+				181FE31D248EA6C900A180EA /* SwiftLint */,
+				18D775B922AD944300AE281E /* Sources */,
+				18D775BA22AD944300AE281E /* Frameworks */,
+				18D775BB22AD944300AE281E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CD047DE22CED59DA00782EDE /* TheMet */,
+			);
+			name = TheMet;
+			productName = MyRWTutorial;
+			productReference = 18D775BD22AD944300AE281E /* TheMet.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18D775B522AD944300AE281E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1640;
+				ORGANIZATIONNAME = Kodeco;
+				TargetAttributes = {
+					18D775BC22AD944300AE281E = {
+						CreatedOnToolsVersion = 11.0;
+					};
+				};
+			};
+			buildConfigurationList = 18D775B822AD944300AE281E /* Build configuration list for PBXProject "TheMet" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 18D775B422AD944300AE281E;
+			packageReferences = (
+				27745F2E2E47C19D0071E4CB /* XCRemoteSwiftPackageReference "opentelemetry-swift" */,
+			);
+			productRefGroup = 18D775BE22AD944300AE281E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18D775BC22AD944300AE281E /* TheMet */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		18D775BB22AD944300AE281E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		181FE31D248EA6C900A180EA /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --no-cache --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18D775B922AD944300AE281E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				271ABA532E480A940063DBC4 /* OTelSpans.swift in Sources */,
+				271ABA552E480BDA0063DBC4 /* Common.swift in Sources */,
+				27745F392E47C1AA0071E4CB /* OTelMetrics.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		18D775CF22AD944400AE281E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		18D775D022AD944400AE281E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		18D775D222AD944400AE281E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "TheMet/Preview\\ Content";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = TheMet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.TheMet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		18D775D322AD944400AE281E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "TheMet/Preview\\ Content";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = TheMet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.TheMet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18D775B822AD944300AE281E /* Build configuration list for PBXProject "TheMet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18D775CF22AD944400AE281E /* Debug */,
+				18D775D022AD944400AE281E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18D775D122AD944400AE281E /* Build configuration list for PBXNativeTarget "TheMet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18D775D222AD944400AE281E /* Debug */,
+				18D775D322AD944400AE281E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		27745F2E2E47C19D0071E4CB /* XCRemoteSwiftPackageReference "opentelemetry-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/open-telemetry/opentelemetry-swift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		271ABA572E480F9F0063DBC4 /* ResourceExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27745F2E2E47C19D0071E4CB /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = ResourceExtension;
+		};
+		27745F2F2E47C19D0071E4CB /* OpenTelemetryApi */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27745F2E2E47C19D0071E4CB /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = OpenTelemetryApi;
+		};
+		27745F312E47C19D0071E4CB /* OpenTelemetryProtocolExporter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27745F2E2E47C19D0071E4CB /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = OpenTelemetryProtocolExporter;
+		};
+		27745F332E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27745F2E2E47C19D0071E4CB /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = OpenTelemetryProtocolExporterHTTP;
+		};
+		27745F352E47C19D0071E4CB /* OpenTelemetrySdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27745F2E2E47C19D0071E4CB /* XCRemoteSwiftPackageReference "opentelemetry-swift" */;
+			productName = OpenTelemetrySdk;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 18D775B522AD944300AE281E /* Project object */;
+}

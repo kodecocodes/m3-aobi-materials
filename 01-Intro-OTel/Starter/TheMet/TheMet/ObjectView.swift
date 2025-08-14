@@ -43,7 +43,6 @@ struct ObjectView: View {
             .multilineTextAlignment(.leading)
             .font(.callout)
             .frame(minHeight: 44)
-            // add these four modifiers
             .padding()
             .background(Color.metBackground)
             .foregroundStyle(.white)

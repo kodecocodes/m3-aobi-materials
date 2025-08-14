@@ -36,6 +36,7 @@ struct ContentView: View {
   @StateObject private var store = TheMetStore()
   @State private var query = "rhino"
   @State private var showQueryField = false
+  @State private var fetchObjectsTask: Task<Void, Error>?
 
   var body: some View {
     NavigationStack {
@@ -73,7 +74,15 @@ struct ContentView: View {
         }
         .alert("Search the Met", isPresented: $showQueryField) {
           TextField("Search the Met", text: $query)
-          Button("Search") { }
+          Button("Search") {
+            fetchObjectsTask?.cancel()
+            fetchObjectsTask = Task {
+              do {
+                store.objects = []
+                try await store.fetchObjects(for: query)
+              } catch {}
+            }
+          }
         }
         .navigationDestination(for: URL.self) { url in
           SafariView(url: url)
@@ -84,6 +93,14 @@ struct ContentView: View {
           ObjectView(object: object)
         }
       }
+      .overlay {
+        if store.objects.isEmpty { ProgressView() }
+      }
+    }
+    .task {
+      do {
+        try await store.fetchObjects(for: query)
+      } catch {}
     }
   }
 }

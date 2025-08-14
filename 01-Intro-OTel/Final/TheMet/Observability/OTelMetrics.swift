@@ -42,9 +42,9 @@ public class OTelMetrics {
   var grafanaExporter: OtlpHttpMetricExporter!
   let grafanaToken = ""
   
-  public init() {
+  private init() {
     guard !grafanaToken.isEmpty else {
-      assertionFailure("You forgot to add your grafana token")
+//      assertionFailure("You forgot to add your grafana token")
       return
     }
     
@@ -70,24 +70,9 @@ public class OTelMetrics {
     
     let meter = openTelemetry.meterProvider.meterBuilder(name: metricsGroup).build()
     
-    let gauge = (meter.gaugeBuilder(name: name) as! DoubleGaugeBuilderSdk).build()
+    var gauge = meter.gaugeBuilder(name: name).build()
     
     gauge.record(value: value, attributes: attributes)
-  }
-  
-  public func sendCounter(
-    metricsGroup: String,
-    name: String,
-    value: Double,
-    attributes: [String: AttributeValue] = [:]
-  ) {
-    let openTelemetry = OpenTelemetry.instance
-    
-    let meter = openTelemetry.meterProvider.meterBuilder(name: metricsGroup).build()
-    
-    var counter = (meter.counterBuilder(name: name) as! DoubleCounterMeterBuilderSdk).build()
-    
-    counter.add(value: value, attributes: attributes)
   }
   
   public class func sendGauge(
@@ -97,40 +82,5 @@ public class OTelMetrics {
     attributes: [String: AttributeValue] = [:]
   ) {
     shared.sendGauge(metricsGroup: metricsGroup, name: name, value: value, attributes: attributes)
-  }
-  
-  public func sendHistogram(
-    metricsGroup: String,
-    name: String,
-    values: [(measure: Double, count: Int)],
-    unit: String = "",
-    boundaries: [Double] = [],
-    attributes: [String: AttributeValue] = [:]
-  ) {
-    let openTelemetry = OpenTelemetry.instance
-    
-    let meter = openTelemetry.meterProvider.meterBuilder(name: metricsGroup).build()
-    
-    let histogram = (meter.histogramBuilder(name: name) as! DoubleHistogramMeterBuilderSdk)
-      .setExplicitBucketBoundariesAdvice(boundaries)
-      .build()
-    
-    print("Boundaries: \(boundaries)")
-    
-    for (measure, count) in values {
-      guard measure > 0 else { continue }
-      for _ in 0..<count {
-        histogram.record(value: measure, attributes: attributes)
-      }
-    }
-  }
-  
-  public class func sendHistogram(
-    metricsGroup: String,
-    name: String,
-    values: [(measure: Double, count: Int)],
-    attributes: [String: AttributeValue] = [:]
-  ) {
-    shared.sendHistogram(metricsGroup: metricsGroup, name: name, values: values, attributes: attributes)
   }
 }

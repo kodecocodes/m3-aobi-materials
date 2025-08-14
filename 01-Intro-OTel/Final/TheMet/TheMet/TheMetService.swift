@@ -38,10 +38,10 @@ struct TheMetService {
   let decoder = JSONDecoder()
 
   func getObjectIDs(from queryTerm: String) async throws -> ObjectIDs? {
-    let objectIDs: ObjectIDs?  // 1
+    let objectIDs: ObjectIDs?
     guard
       var urlComponents = URLComponents(string: baseURLString + "search")
-    else {  // 2
+    else {
       return nil
     }
     let baseParams = ["hasImages": "true"]
@@ -60,23 +60,23 @@ struct TheMetService {
       return nil
     }
 
-    do {  // 2
+    do {
       objectIDs = try decoder.decode(ObjectIDs.self, from: data)
     } catch {
       print(error)
       return nil
     }
-    return objectIDs  // 3
+    return objectIDs
   }
 
   func getObject(from objectID: Int) async throws -> Object? {
-    let object: Object?  // 1
+    let object: Object?
 
-    let objectURLString = baseURLString + "objects/\(objectID)"  // 2
+    let objectURLString = baseURLString + "objects/\(objectID)"
     guard let objectURL = URL(string: objectURLString) else { return nil }
     let objectRequest = URLRequest(url: objectURL)
 
-    let (data, response) = try await session.data(for: objectRequest)  // 3
+    let (data, response) = try await session.data(for: objectRequest)
     if let response = response as? HTTPURLResponse {
       let statusCode = response.statusCode
       if !(200..<300).contains(statusCode) {
@@ -86,12 +86,12 @@ struct TheMetService {
       }
     }
 
-    do {  // 4
+    do {
       object = try decoder.decode(Object.self, from: data)
     } catch {
       print(error)
       return nil
     }
-    return object  // 5
+    return object
   }
 }

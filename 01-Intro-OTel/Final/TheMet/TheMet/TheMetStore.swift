@@ -36,15 +36,14 @@ class TheMetStore: ObservableObject {
   @Published var objects: [Object] = []
   let service = TheMetService()
   let maxIndex: Int
-  let otelMetrics = OTelMetrics()
 
   init(_ maxIndex: Int = 30) {
     self.maxIndex = maxIndex
   }
 
   func fetchObjects(for queryTerm: String) async throws {
-    if let objectIDs = try await service.getObjectIDs(from: queryTerm) {  // 1
-      for (index, objectID) in objectIDs.objectIDs.enumerated()  // 2
+    if let objectIDs = try await service.getObjectIDs(from: queryTerm) {
+      for (index, objectID) in objectIDs.objectIDs.enumerated()
       where index < maxIndex {
         if let object = try await service.getObject(from: objectID) {
           await MainActor.run {
@@ -53,7 +52,10 @@ class TheMetStore: ObservableObject {
         }
       }
       print("got \(objects.count) objects")
-      otelMetrics.sendGauge(metricsGroup: "TheMet-Metrics", name: "ObjectsCount", value: Double(objects.count))
+      OTelMetrics.sendGauge(
+        metricsGroup: "TheMet-Metrics",
+        name: "ObjectsCount",
+        value: Double(objects.count))
     }
   }
 }
