@@ -15,7 +15,15 @@
 		27745F342E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F332E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP */; };
 		27745F362E47C19D0071E4CB /* OpenTelemetrySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F352E47C19D0071E4CB /* OpenTelemetrySdk */; };
 		27745F392E47C1AA0071E4CB /* OTelMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27745F372E47C1AA0071E4CB /* OTelMetrics.swift */; };
-		27A0F04B2E4FCCE500B9B67F /* OTelLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F04A2E4FCCE500B9B67F /* OTelLogs.swift */; };
+		27A0F01A2E4FC79100B9B67F /* MetricsKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0192E4FC79100B9B67F /* MetricsKitService.swift */; };
+		27A0F02C2E4FC9A600B9B67F /* MetricPayloadSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F02B2E4FC9A600B9B67F /* MetricPayloadSender.swift */; };
+		27A0F02F2E4FCB4C00B9B67F /* MXMetricsPayload+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F02E2E4FCB4C00B9B67F /* MXMetricsPayload+Attributes.swift */; };
+		27A0F04D2E4FCE7700B9B67F /* OTelLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F04C2E4FCE7700B9B67F /* OTelLogs.swift */; };
+		27A0F04F2E4FD71600B9B67F /* HistogrammedMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F04E2E4FD71600B9B67F /* HistogrammedMetric.swift */; };
+		27A0F0552E4FDE8000B9B67F /* MXCellularConditionMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0542E4FDE8000B9B67F /* MXCellularConditionMetric.swift */; };
+		27A0F0562E4FDE8000B9B67F /* MXAppLaunchMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0512E4FDE8000B9B67F /* MXAppLaunchMetric.swift */; };
+		27A0F0572E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0522E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift */; };
+		27A0F0582E4FDE8000B9B67F /* MXBackgroundExitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0532E4FDE8000B9B67F /* MXBackgroundExitData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +31,15 @@
 		271ABA522E480A940063DBC4 /* OTelSpans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelSpans.swift; sourceTree = "<group>"; };
 		271ABA542E480BDA0063DBC4 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		27745F372E47C1AA0071E4CB /* OTelMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelMetrics.swift; sourceTree = "<group>"; };
-		27A0F04A2E4FCCE500B9B67F /* OTelLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelLogs.swift; sourceTree = "<group>"; };
+		27A0F0192E4FC79100B9B67F /* MetricsKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsKitService.swift; sourceTree = "<group>"; };
+		27A0F02B2E4FC9A600B9B67F /* MetricPayloadSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricPayloadSender.swift; sourceTree = "<group>"; };
+		27A0F02E2E4FCB4C00B9B67F /* MXMetricsPayload+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MXMetricsPayload+Attributes.swift"; sourceTree = "<group>"; };
+		27A0F04C2E4FCE7700B9B67F /* OTelLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelLogs.swift; sourceTree = "<group>"; };
+		27A0F04E2E4FD71600B9B67F /* HistogrammedMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogrammedMetric.swift; sourceTree = "<group>"; };
+		27A0F0512E4FDE8000B9B67F /* MXAppLaunchMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAppLaunchMetric.swift; sourceTree = "<group>"; };
+		27A0F0522E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAppResponsivenessMetric.swift; sourceTree = "<group>"; };
+		27A0F0532E4FDE8000B9B67F /* MXBackgroundExitData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXBackgroundExitData.swift; sourceTree = "<group>"; };
+		27A0F0542E4FDE8000B9B67F /* MXCellularConditionMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXCellularConditionMetric.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -59,6 +75,7 @@
 		18D775B422AD944300AE281E = {
 			isa = PBXGroup;
 			children = (
+				27A0F0182E4FC76000B9B67F /* MetricsKit */,
 				27745F382E47C1AA0071E4CB /* Observability */,
 				CD047DE22CED59DA00782EDE /* TheMet */,
 				271ABA562E480F9F0063DBC4 /* Frameworks */,
@@ -89,9 +106,40 @@
 				271ABA542E480BDA0063DBC4 /* Common.swift */,
 				27745F372E47C1AA0071E4CB /* OTelMetrics.swift */,
 				271ABA522E480A940063DBC4 /* OTelSpans.swift */,
-				27A0F04A2E4FCCE500B9B67F /* OTelLogs.swift */,
+				27A0F04C2E4FCE7700B9B67F /* OTelLogs.swift */,
 			);
 			path = Observability;
+			sourceTree = "<group>";
+		};
+		27A0F0182E4FC76000B9B67F /* MetricsKit */ = {
+			isa = PBXGroup;
+			children = (
+				27A0F02D2E4FCB1000B9B67F /* Extensions */,
+				27A0F0192E4FC79100B9B67F /* MetricsKitService.swift */,
+				27A0F02B2E4FC9A600B9B67F /* MetricPayloadSender.swift */,
+				27A0F04E2E4FD71600B9B67F /* HistogrammedMetric.swift */,
+			);
+			path = MetricsKit;
+			sourceTree = "<group>";
+		};
+		27A0F02D2E4FCB1000B9B67F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				27A0F0502E4FDE5700B9B67F /* MetricTypes */,
+				27A0F02E2E4FCB4C00B9B67F /* MXMetricsPayload+Attributes.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		27A0F0502E4FDE5700B9B67F /* MetricTypes */ = {
+			isa = PBXGroup;
+			children = (
+				27A0F0512E4FDE8000B9B67F /* MXAppLaunchMetric.swift */,
+				27A0F0522E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift */,
+				27A0F0532E4FDE8000B9B67F /* MXBackgroundExitData.swift */,
+				27A0F0542E4FDE8000B9B67F /* MXCellularConditionMetric.swift */,
+			);
+			path = MetricTypes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,7 +242,15 @@
 			files = (
 				271ABA532E480A940063DBC4 /* OTelSpans.swift in Sources */,
 				271ABA552E480BDA0063DBC4 /* Common.swift in Sources */,
-				27A0F04B2E4FCCE500B9B67F /* OTelLogs.swift in Sources */,
+				27A0F02C2E4FC9A600B9B67F /* MetricPayloadSender.swift in Sources */,
+				27A0F01A2E4FC79100B9B67F /* MetricsKitService.swift in Sources */,
+				27A0F0552E4FDE8000B9B67F /* MXCellularConditionMetric.swift in Sources */,
+				27A0F0562E4FDE8000B9B67F /* MXAppLaunchMetric.swift in Sources */,
+				27A0F0572E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift in Sources */,
+				27A0F0582E4FDE8000B9B67F /* MXBackgroundExitData.swift in Sources */,
+				27A0F04D2E4FCE7700B9B67F /* OTelLogs.swift in Sources */,
+				27A0F02F2E4FCB4C00B9B67F /* MXMetricsPayload+Attributes.swift in Sources */,
+				27A0F04F2E4FD71600B9B67F /* HistogrammedMetric.swift in Sources */,
 				27745F392E47C1AA0071E4CB /* OTelMetrics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
