@@ -34,10 +34,6 @@ import SwiftUI
 
 @main
 struct TheMetApp: App {
-  init() {
-    MetricsKitService.beginCollection()
-  }
-  
   var body: some Scene {
     WindowGroup {
       ContentView()

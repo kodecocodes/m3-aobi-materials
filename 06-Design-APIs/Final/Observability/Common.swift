@@ -1,4 +1,4 @@
-/// Copyright (c) 2025 Kodeco Inc.
+/// Copyright (c) 2025 Kodeco LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -30,17 +30,26 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
 
-@main
-struct TheMetApp: App {
-  init() {
-    MetricsKitService.beginCollection()
+import Foundation
+import ResourceExtension
+import OpenTelemetryApi
+
+var resources = DefaultResources().get()
+let grafanaToken = ""
+var currentLoggingLevel = LoggingLevel.maximum
+
+public enum TracingContext {
+  @TaskLocal static var activeSpan: (any Span)?
+}
+
+public enum LoggingLevel: Int, Comparable {
+  public static func < (lhs: LoggingLevel, rhs: LoggingLevel) -> Bool {
+    lhs.rawValue < rhs.rawValue
   }
   
-  var body: some Scene {
-    WindowGroup {
-      ContentView()
-    }
-  }
+  case none = 0
+  case basic = 1
+  case detailed = 2
+  case maximum = 3
 }
