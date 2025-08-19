@@ -38,17 +38,16 @@ import OpenTelemetryProtocolExporterCommon
 import OpenTelemetryProtocolExporterHttp
 import ResourceExtension
 
-//typealias OpenTelemetry = OpenTelemetryConcurrency.OpenTelemetry
-
 public class OTelSpans {
   private static var shared = OTelSpans()
-  
-  let sampleKey = "sampleKey"
-  let sampleValue = "sampleValue"
   
   var grafanaHttpExporter: OtlpHttpTraceExporter!
   
   private init() {
+    guard !grafanaToken.isEmpty else {
+      print("You forgot to add your grafana token!!!")
+      return
+    }
     
     let grafanaEndpoint = URL(string: "https://otlp-gateway-prod-eu-west-2.grafana.net/otlp/v1/traces")!
     

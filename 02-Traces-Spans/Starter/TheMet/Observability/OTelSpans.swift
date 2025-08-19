@@ -31,55 +31,19 @@
 /// THE SOFTWARE.
 
 import Foundation
+
 import OpenTelemetryApi
 import OpenTelemetrySdk
 import OpenTelemetryProtocolExporterCommon
 import OpenTelemetryProtocolExporterHttp
+import ResourceExtension
 
-public class OTelMetrics {
-  private static var shared = OTelMetrics()
+public class OTelSpans {
+  private static var shared = OTelSpans()
   
-  var grafanaExporter: OtlpHttpMetricExporter!
+  var grafanaHttpExporter: OtlpHttpTraceExporter!
   
   private init() {
-    guard !grafanaToken.isEmpty else {
-      print("You forgot to add your grafana token!!!")
-      return
-    }
     
-    let grafanaEndpoint = URL(string: "https://otlp-gateway-prod-eu-west-2.grafana.net/otlp/v1/metrics")!
-    let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
-    grafanaExporter = OtlpHttpMetricExporter(endpoint: grafanaEndpoint, config: grafanaHeaders)
-    
-    OpenTelemetry.registerMeterProvider(meterProvider: MeterProviderSdk.builder()
-      .registerView(selector: InstrumentSelector.builder().setInstrument(name: ".*").build(), view: View.builder().build())
-                                        
-      .registerMetricReader(reader: PeriodicMetricReaderBuilder(exporter: grafanaExporter).setInterval(timeInterval: 5).build())
-      .build()
-    )
-  }
-  
-  public func sendGauge(
-    metricsGroup: String,
-    name: String,
-    value: Double,
-    attributes: [String: AttributeValue] = [:]
-  ) {
-    let openTelemetry = OpenTelemetry.instance
-    
-    let meter = openTelemetry.meterProvider.meterBuilder(name: metricsGroup).build()
-    
-    var gauge = meter.gaugeBuilder(name: name).build()
-    
-    gauge.record(value: value, attributes: attributes)
-  }
-  
-  public class func sendGauge(
-    metricsGroup: String,
-    name: String,
-    value: Double,
-    attributes: [String: AttributeValue] = [:]
-  ) {
-    shared.sendGauge(metricsGroup: metricsGroup, name: name, value: value, attributes: attributes)
   }
 }
