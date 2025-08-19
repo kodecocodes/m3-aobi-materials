@@ -43,11 +43,6 @@ public class OTelMetrics {
   let grafanaToken = ""
   
   private init() {
-    guard !grafanaToken.isEmpty else {
-//      assertionFailure("You forgot to add your grafana token")
-      return
-    }
-    
     let grafanaEndpoint = URL(string: "https://otlp-gateway-prod-eu-west-2.grafana.net/otlp/v1/metrics")!
     let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
     grafanaExporter = OtlpHttpMetricExporter(endpoint: grafanaEndpoint, config: grafanaHeaders)

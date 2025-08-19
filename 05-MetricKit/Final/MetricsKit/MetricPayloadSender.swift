@@ -64,20 +64,21 @@ class MetricPayloadSender {
   func sendMetric(name: String, measurement: Double?) {
     guard let measurement else { return }
     
-    OTelMetrics.sendGauge(
-      metricsGroup: "MetricsKit",
-      name: name,
-      value: measurement,
-      attributes: self.attributes)
+    OTelLogs.sendEvent(
+      scope: "MetricsKit",
+      eventName: name,
+      data: ["value" : AttributeValue.double(measurement)],
+      message: "")
   }
   
   func sendMetric<T: Unit>(name: String, measurement: Measurement<T>?) {
     guard let measurement else { return }
-    OTelMetrics.sendGauge(
-      metricsGroup: "MetricsKit",
-      name: name,
-      value: measurement.value,
-      attributes: self.attributes)
+    
+    OTelLogs.sendEvent(
+      scope: "MetricsKit",
+      eventName: name,
+      data: ["value" : AttributeValue.double(measurement.value)],
+      message: "")
   }
   
   func sendHistogram<T>(

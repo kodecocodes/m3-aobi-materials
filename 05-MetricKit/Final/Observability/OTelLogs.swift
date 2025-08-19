@@ -41,7 +41,7 @@ public class OTelLogs {
   
   var grafanaExporter: OtlpHttpLogExporter!
   
-  public func basicMetricConfiguration() {
+  private init() {
     let grafanaEndpoint = URL(string: "https://otlp-gateway-prod-eu-west-2.grafana.net/otlp/v1/logs")!
     let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
     grafanaExporter = OtlpHttpLogExporter(endpoint: grafanaEndpoint, config: grafanaHeaders)
@@ -53,24 +53,42 @@ public class OTelLogs {
       ]).build())
   }
   
+  public class func sendMetricEvent(
+    scope: String,
+    eventName: String,
+    timestamp: Date = Date(),
+    value: Double
+  ) {
+    shared.sendEvent(
+      scope: scope,
+      eventName: eventName,
+      timestamp: timestamp,
+      data: ["value": AttributeValue.double(value)],
+      message: "")
+  }
+  
   public class func sendEvent(
     scope: String,
+    eventName: String,
+    timestamp: Date = Date(),
     data: [String: AttributeValue],
     message: String,
     span: (any Span)? = nil
   ) {
-    shared.sendEvent(scope: scope, data: data, message: message, span: span)
+    shared.sendEvent(scope: scope, eventName: eventName, data: data, message: message, span: span)
   }
   
   public func sendEvent(
     scope: String,
+    eventName: String,
+    timestamp: Date = Date(),
     data: [String: AttributeValue],
     message: String,
     span: (any Span)? = nil
   ) {
     let openTelemetry = OpenTelemetry.instance
     let otelLogger = openTelemetry.loggerProvider.loggerBuilder(instrumentationScopeName: scope).setEventDomain("Device") .build()
-    let event = otelLogger.eventBuilder(name: "Event")
+    let event = otelLogger.eventBuilder(name: eventName)
       .setData(data)
       .setBody(.string(message))
     if let span {

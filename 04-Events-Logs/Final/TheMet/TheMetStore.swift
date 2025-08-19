@@ -68,5 +68,9 @@ class TheMetStore: ObservableObject {
       name: "ObjectsCount",
       value: Double(objects.count))
     
+    OTelLogs.sendMetricEvent(
+      scope: "TheMet-Metrics",
+      eventName: "ObjectsCount",
+      value: Double(objects.count))
   }
 }
