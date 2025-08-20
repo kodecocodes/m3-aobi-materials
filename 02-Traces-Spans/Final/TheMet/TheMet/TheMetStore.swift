@@ -42,26 +42,33 @@ class TheMetStore: ObservableObject {
   }
 
   func fetchObjects(for queryTerm: String) async throws {
-    if let objectIDs = try await service.getObjectIDs(from: queryTerm) {
-      for (index, objectID) in objectIDs.objectIDs.enumerated()
-      where index < maxIndex {
-        let childSpan = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "FetchingObject", parentSpan: TracingContext.activeSpan)
-        childSpan.setAttribute(key: "objectID", value: objectID)
-        var object: Object?
-        try await TracingContext.$activeSpan.withValue(childSpan) {
-          object = try await service.getObject(from: objectID)
-        }
-        if let object {
-          await MainActor.run {
-            objects.append(object)
+    let span = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "fetchObjects")
+    span.setAttribute(key: "SearchKeyword", value: queryTerm)
+    try await TracingContext.$activeSpan.withValue(span) {
+      if let objectIDs = try await service.getObjectIDs(from: queryTerm) {
+        span.setAttribute(key: "ObjectIDsCount", value: objectIDs.objectIDs.count)
+        for (index, objectID) in objectIDs.objectIDs.enumerated()
+        where index < maxIndex {
+          let childSpan = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "FetchingObject", parentSpan: TracingContext.activeSpan)
+          childSpan.setAttribute(key: "objectID", value: objectID)
+          var object: Object?
+          try await TracingContext.$activeSpan.withValue(childSpan) {
+            object = try await service.getObject(from: objectID)
           }
-          childSpan.status = .ok
-        } else {
-          childSpan.status = .error(description: "Object Not Found")
+          if let object {
+            await MainActor.run {
+              objects.append(object)
+            }
+            childSpan.status = .ok
+          } else {
+            childSpan.status = .error(description: "Object Not Found")
+          }
+          childSpan.end()
         }
-        childSpan.end()
       }
     }
+    span.setAttribute(key: "ObjectsCount", value: objects.count)
+    span.end()
     print("got \(objects.count) objects")
     OTelMetrics.sendGauge(
       metricsGroup: "TheMet-Metrics",

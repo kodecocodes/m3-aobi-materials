@@ -85,7 +85,9 @@ public class OTelSpans {
     spanStartTime: Date? = nil,
     parentSpan: (any Span)? = nil,
   ) -> (any Span) {
-    var spanBuilder = tracer(scopeName: scopeName).spanBuilder(spanName: name).setSpanKind(spanKind: spanKind)
+    var spanBuilder = tracer(scopeName: scopeName)
+      .spanBuilder(spanName: name)
+      .setSpanKind(spanKind: spanKind)
     if let parentSpan {
       spanBuilder = spanBuilder.setParent(parentSpan)
     }
