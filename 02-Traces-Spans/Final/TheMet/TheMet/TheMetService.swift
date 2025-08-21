@@ -50,8 +50,10 @@ struct TheMetService {
     urlComponents.queryItems! += [URLQueryItem(name: "q", value: queryTerm)]
     guard let queryURL = urlComponents.url else { return nil }
     let request = URLRequest(url: queryURL)
-
-    let (data, response) = try await session.data(for: request)  // 1
+    
+    let networkSpan = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "GetIDs-Network", parentSpan: TracingContext.activeSpan)
+    let (data, response) = try await session.data(for: request)
+    networkSpan.end()
     guard
       let response = response as? HTTPURLResponse,
       (200..<300).contains(response.statusCode)

@@ -80,25 +80,15 @@ public class OTelSpans {
   public func createSpan(
     scopeName: String,
     name: String,
-    attributes: [String: AttributeValue] = [:],
-    spanKind: SpanKind = .client,
-    spanStartTime: Date? = nil,
     parentSpan: (any Span)? = nil,
   ) -> (any Span) {
     var spanBuilder = tracer(scopeName: scopeName)
       .spanBuilder(spanName: name)
-      .setSpanKind(spanKind: spanKind)
     if let parentSpan {
       spanBuilder = spanBuilder.setParent(parentSpan)
     }
     
-    if let spanStartTime {
-      spanBuilder = spanBuilder.setStartTime(time: spanStartTime)
-    }
-    
     let span = spanBuilder.startSpan()
-    
-    span.setAttributes(attributes)
     
     return span
   }
@@ -106,16 +96,10 @@ public class OTelSpans {
   public class func createSpan(
     scopeName: String,
     name: String,
-    attributes: [String: AttributeValue] = [:],
-    spanKind: SpanKind = .client,
-    spanStartTime: Date? = nil,
     parentSpan: (any Span)? = nil,
   ) -> (any Span) {
     shared.createSpan(scopeName: scopeName,
                       name: name,
-                      attributes: attributes,
-                      spanKind: spanKind,
-                      spanStartTime: spanStartTime,
                       parentSpan: parentSpan)
   }
 }

@@ -60,8 +60,6 @@ class TheMetStore: ObservableObject {
               objects.append(object)
             }
             childSpan.status = .ok
-          } else {
-            childSpan.status = .error(description: "Object Not Found")
           }
           childSpan.end()
         }
@@ -74,6 +72,5 @@ class TheMetStore: ObservableObject {
       metricsGroup: "TheMet-Metrics",
       name: "ObjectsCount",
       value: Double(objects.count))
-    
   }
 }
