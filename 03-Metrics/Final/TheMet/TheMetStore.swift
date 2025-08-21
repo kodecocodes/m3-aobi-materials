@@ -68,5 +68,18 @@ class TheMetStore: ObservableObject {
       name: "ObjectsCount",
       value: Double(objects.count))
     
+    OTelMetrics.sendHistogram(
+      metricsGroup: "TheMet-Metrics",
+      name: "Histogram Demo",
+      values: [
+        (measure: 5, count: 1),
+        (measure: 15, count: 1),
+        (measure: 25, count: 1),
+        (measure: 35, count: 1),
+      ],
+      boundaries: [0, 2, 11, 26, 70]
+    )
+    
+    OTelMetrics.sendCounter(metricsGroup: "TheMet-Metrics", name: "SearchCount", value: 1)
   }
 }

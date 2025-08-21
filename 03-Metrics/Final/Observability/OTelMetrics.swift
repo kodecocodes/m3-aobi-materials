@@ -48,7 +48,7 @@ public class OTelMetrics {
     }
     
     let grafanaEndpoint = URL(string: "https://otlp-gateway-prod-eu-west-2.grafana.net/otlp/v1/metrics")!
-    let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
+    let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: false)
     grafanaExporter = OtlpHttpMetricExporter(endpoint: grafanaEndpoint, config: grafanaHeaders)
     
     OpenTelemetry.registerMeterProvider(meterProvider: MeterProviderSdk.builder()
@@ -72,6 +72,15 @@ public class OTelMetrics {
     var gauge = meter.gaugeBuilder(name: name).build()
     
     gauge.record(value: value, attributes: attributes)
+  }
+  
+  public class func sendCounter(
+    metricsGroup: String,
+    name: String,
+    value: Int,
+    attributes: [String: AttributeValue] = [:]
+  ) {
+    shared.sendCounter(metricsGroup: metricsGroup, name: name, value: value, attributes: attributes)
   }
   
   public func sendCounter(
@@ -128,8 +137,10 @@ public class OTelMetrics {
     metricsGroup: String,
     name: String,
     values: [(measure: Double, count: Int)],
+    unit: String = "",
+    boundaries: [Double] = [],
     attributes: [String: AttributeValue] = [:]
   ) {
-    shared.sendHistogram(metricsGroup: metricsGroup, name: name, values: values, attributes: attributes)
+    shared.sendHistogram(metricsGroup: metricsGroup, name: name, values: values, unit: unit, boundaries: boundaries, attributes: attributes)
   }
 }
