@@ -72,7 +72,7 @@ public class OTelLogs {
     eventName: String,
     timestamp: Date = Date(),
     data: [String: AttributeValue],
-    message: String,
+    message: String = "",
     span: (any Span)? = nil
   ) {
     shared.sendEvent(scope: scope, eventName: eventName, data: data, message: message, span: span)
@@ -83,7 +83,7 @@ public class OTelLogs {
     eventName: String,
     timestamp: Date = Date(),
     data: [String: AttributeValue],
-    message: String,
+    message: String = "",
     span: (any Span)? = nil
   ) {
     let openTelemetry = OpenTelemetry.instance

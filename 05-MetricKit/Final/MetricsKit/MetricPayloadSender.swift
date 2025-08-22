@@ -81,6 +81,17 @@ class MetricPayloadSender {
       message: "")
   }
   
+  func sendMetric(metric: ValueMetric?) {
+      guard let metric else { return }
+      
+      var metricAttributes = self.attributes
+      for (key, value) in metric.toDictionary() {
+          metricAttributes[key] = .string(value as! String)
+      }
+      
+      OTelLogs.sendEvent(scope: "MetricsKit", eventName: metric.name, data: metricAttributes)
+  }
+  
   func sendHistogram<T>(
     name: String,
     values: MXHistogram<T>?,

@@ -31,13 +31,7 @@
 /// THE SOFTWARE.
 
 
-import Foundation
-import ResourceExtension
-import OpenTelemetryApi
-
-var resources = DefaultResources().get()
-let grafanaToken = "MTMwMzQwNTpnbGNfZXlKdklqb2lNVFEzTVRFeU15SXNJbTRpT2lKemRHRmpheTB4TXpBek5EQTFMVzkwYkhBdGQzSnBkR1V0ZEdWemRHRndjQ0lzSW1zaU9pSlJOekE0T1RZeU9XMUpPRTlIT1doRFNrNUpPRVJHYVhBaUxDSnRJanA3SW5JaU9pSndjbTlrTFdWMUxYZGxjM1F0TWlKOWZRPT0="
-
-public enum TracingContext {
-  @TaskLocal static var activeSpan: (any Span)?
+public protocol ValueMetric {
+    func toDictionary() -> [String: String]
+    var name: String { get }
 }
