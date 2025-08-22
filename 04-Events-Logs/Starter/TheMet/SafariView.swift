@@ -30,58 +30,22 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import SwiftUI
+import SafariServices
 
-class TheMetStore: ObservableObject {
-  @Published var objects: [Object] = []
-  let service = TheMetService()
-  let maxIndex: Int
+struct SafariView: UIViewControllerRepresentable {
+  let url: URL
 
-  init(_ maxIndex: Int = 30) {
-    self.maxIndex = maxIndex
+  func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SFSafariViewController {
+    return SFSafariViewController(url: url)
   }
 
-  func fetchObjects(for queryTerm: String) async throws {
-    let span = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "fetchObjects")
-    span.setAttribute(key: "SearchKeyword", value: queryTerm)
-    try await TracingContext.$activeSpan.withValue(span) {
-      if let objectIDs = try await service.getObjectIDs(from: queryTerm) {
-        span.setAttribute(key: "ObjectIDsCount", value: objectIDs.objectIDs.count)
-        for (index, objectID) in objectIDs.objectIDs.enumerated()
-        where index < maxIndex {
-          let childSpan = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "FetchingObject", parentSpan: TracingContext.activeSpan)
-          childSpan.setAttribute(key: "objectID", value: objectID)
-          var object: Object?
-          try await TracingContext.$activeSpan.withValue(childSpan) {
-            object = try await service.getObject(from: objectID)
-          }
-          if let object {
-            await MainActor.run {
-              objects.append(object)
-            }
-            childSpan.status = .ok
-          }
-          childSpan.end()
-        }
-      }
-    }
-    span.setAttribute(key: "ObjectsCount", value: objects.count)
-    
-    OTelLogs.sendLog(
-      scope: "TheMet-Logs",
-      message: "Searched for \(queryTerm), found \(objects.count) objects",
-      span: span)
-    
-    OTelLogs.sendEvent(
-      scope: "TheMet-Logs",
-      eventName: "objects_fetched",
-      data: ["value" : AttributeValue.int(objects.count)])
-    
-    span.end()
-    print("got \(objects.count) objects")
-//    OTelMetrics.sendGauge(
-//      metricsGroup: "TheMet-Metrics",
-//      name: "ObjectsCount",
-//      value: Double(objects.count))
+  func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariView>) {}
+}
+
+struct SafariView_Previews: PreviewProvider {
+  static var previews: some View {
+    // swiftlint:disable:next force_unwrapping
+    SafariView(url: URL(string: "https://www.metmuseum.org/art/collection/search/437092")!)
   }
 }

@@ -32,56 +32,12 @@
 
 import Foundation
 
-class TheMetStore: ObservableObject {
-  @Published var objects: [Object] = []
-  let service = TheMetService()
-  let maxIndex: Int
-
-  init(_ maxIndex: Int = 30) {
-    self.maxIndex = maxIndex
-  }
-
-  func fetchObjects(for queryTerm: String) async throws {
-    let span = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "fetchObjects")
-    span.setAttribute(key: "SearchKeyword", value: queryTerm)
-    try await TracingContext.$activeSpan.withValue(span) {
-      if let objectIDs = try await service.getObjectIDs(from: queryTerm) {
-        span.setAttribute(key: "ObjectIDsCount", value: objectIDs.objectIDs.count)
-        for (index, objectID) in objectIDs.objectIDs.enumerated()
-        where index < maxIndex {
-          let childSpan = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "FetchingObject", parentSpan: TracingContext.activeSpan)
-          childSpan.setAttribute(key: "objectID", value: objectID)
-          var object: Object?
-          try await TracingContext.$activeSpan.withValue(childSpan) {
-            object = try await service.getObject(from: objectID)
-          }
-          if let object {
-            await MainActor.run {
-              objects.append(object)
-            }
-            childSpan.status = .ok
-          }
-          childSpan.end()
-        }
-      }
-    }
-    span.setAttribute(key: "ObjectsCount", value: objects.count)
-    
-    OTelLogs.sendLog(
-      scope: "TheMet-Logs",
-      message: "Searched for \(queryTerm), found \(objects.count) objects",
-      span: span)
-    
-    OTelLogs.sendEvent(
-      scope: "TheMet-Logs",
-      eventName: "objects_fetched",
-      data: ["value" : AttributeValue.int(objects.count)])
-    
-    span.end()
-    print("got \(objects.count) objects")
-//    OTelMetrics.sendGauge(
-//      metricsGroup: "TheMet-Metrics",
-//      name: "ObjectsCount",
-//      value: Double(objects.count))
+public extension URLComponents {
+  /// Maps a dictionary into `[URLQueryItem]` then assigns it to the
+  /// `queryItems` property of this `URLComponents` instance.
+  /// From [Alfian Losari's blog.](https://www.alfianlosari.com/posts/building-safe-url-in-swift-using-urlcomponents-and-urlqueryitem/)
+  /// - Parameter parameters: Dictionary of query parameter names and values
+  mutating func setQueryItems(with parameters: [String: String]) {
+    self.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
   }
 }

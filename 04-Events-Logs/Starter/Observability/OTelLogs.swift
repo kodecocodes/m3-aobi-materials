@@ -53,18 +53,42 @@ public class OTelLogs {
       ]).build())
   }
   
+  public class func sendLog(
+    scope: String,
+    message: String,
+    span: (any Span)? = nil
+  ) {
+    shared.sendLog(
+      scope: scope,
+      message: message,
+      span: span)
+  }
+  
+  public func sendLog(
+    scope: String,
+    message: String,
+    span: (any Span)? = nil
+  ) {
+    let openTelemetry = OpenTelemetry.instance
+    let otelLogger = openTelemetry.loggerProvider.loggerBuilder(instrumentationScopeName: scope).setEventDomain("Device").build()
+    let log = otelLogger.logRecordBuilder()
+      .setBody(.string(message))
+    if let span {
+      _ = log.setSpanContext(span.context)
+    }
+    log.emit()
+  }
+  
   public class func sendEvent(
     scope: String,
     eventName: String,
-    timestamp: Date = Date(),
     data: [String: AttributeValue],
-    message: String = "",
+    message: String,
     span: (any Span)? = nil
   ) {
     shared.sendEvent(
       scope: scope,
       eventName: eventName,
-      timestamp: timestamp,
       data: data,
       message: message,
       span: span)
@@ -73,9 +97,8 @@ public class OTelLogs {
   public func sendEvent(
     scope: String,
     eventName: String,
-    timestamp: Date = Date(),
     data: [String: AttributeValue],
-    message: String = "",
+    message: String,
     span: (any Span)? = nil
   ) {
     let openTelemetry = OpenTelemetry.instance
@@ -83,41 +106,10 @@ public class OTelLogs {
     let event = otelLogger.eventBuilder(name: eventName)
       .setData(data)
       .setBody(.string(message))
-      .setTimestamp(timestamp)
     if let span {
       _ = event.setSpanContext(span.context)
     }
     event.emit()
     _ = grafanaExporter.flush()
-  }
-  
-  public class func sendLog(
-    scope: String,
-    timestamp: Date = Date(),
-    message: String,
-    span: (any Span)? = nil
-  ) {
-    shared.sendLog(
-      scope: scope,
-      timestamp: timestamp,
-      message: message,
-      span: span)
-  }
-  
-  public func sendLog(
-    scope: String,
-    timestamp: Date = Date(),
-    message: String,
-    span: (any Span)? = nil
-  ) {
-    let openTelemetry = OpenTelemetry.instance
-    let otelLogger = openTelemetry.loggerProvider.loggerBuilder(instrumentationScopeName: scope).setEventDomain("Device").build()
-    let log = otelLogger.logRecordBuilder()
-      .setBody(.string(message))
-      .setTimestamp(timestamp)
-    if let span {
-      _ = log.setSpanContext(span.context)
-    }
-    log.emit()
   }
 }

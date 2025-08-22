@@ -66,22 +66,11 @@ class TheMetStore: ObservableObject {
       }
     }
     span.setAttribute(key: "ObjectsCount", value: objects.count)
-    
-    OTelLogs.sendLog(
-      scope: "TheMet-Logs",
-      message: "Searched for \(queryTerm), found \(objects.count) objects",
-      span: span)
-    
-    OTelLogs.sendEvent(
-      scope: "TheMet-Logs",
-      eventName: "objects_fetched",
-      data: ["value" : AttributeValue.int(objects.count)])
-    
     span.end()
     print("got \(objects.count) objects")
-//    OTelMetrics.sendGauge(
-//      metricsGroup: "TheMet-Metrics",
-//      name: "ObjectsCount",
-//      value: Double(objects.count))
+    OTelMetrics.sendGauge(
+      metricsGroup: "TheMet-Metrics",
+      name: "ObjectsCount",
+      value: Double(objects.count))
   }
 }

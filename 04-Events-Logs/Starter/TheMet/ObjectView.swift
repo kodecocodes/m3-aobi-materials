@@ -30,58 +30,76 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import SwiftUI
 
-class TheMetStore: ObservableObject {
-  @Published var objects: [Object] = []
-  let service = TheMetService()
-  let maxIndex: Int
+struct ObjectView: View {
+  let object: Object
 
-  init(_ maxIndex: Int = 30) {
-    self.maxIndex = maxIndex
-  }
-
-  func fetchObjects(for queryTerm: String) async throws {
-    let span = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "fetchObjects")
-    span.setAttribute(key: "SearchKeyword", value: queryTerm)
-    try await TracingContext.$activeSpan.withValue(span) {
-      if let objectIDs = try await service.getObjectIDs(from: queryTerm) {
-        span.setAttribute(key: "ObjectIDsCount", value: objectIDs.objectIDs.count)
-        for (index, objectID) in objectIDs.objectIDs.enumerated()
-        where index < maxIndex {
-          let childSpan = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "FetchingObject", parentSpan: TracingContext.activeSpan)
-          childSpan.setAttribute(key: "objectID", value: objectID)
-          var object: Object?
-          try await TracingContext.$activeSpan.withValue(childSpan) {
-            object = try await service.getObject(from: objectID)
-          }
-          if let object {
-            await MainActor.run {
-              objects.append(object)
-            }
-            childSpan.status = .ok
-          }
-          childSpan.end()
+  var body: some View {
+    VStack {
+      if let url = URL(string: object.objectURL) {
+        Link(destination: url) {
+          WebIndicatorView(title: object.title)
+            .multilineTextAlignment(.leading)
+            .font(.callout)
+            .frame(minHeight: 44)
+            .padding()
+            .background(Color.metBackground)
+            .foregroundStyle(.white)
+            .cornerRadius(10)
         }
+      } else {
+        Text(object.title)
+          .multilineTextAlignment(.leading)
+          .font(.callout)
+          .frame(minHeight: 44)
       }
+
+      if object.isPublicDomain {
+        AsyncImage(url: URL(string: object.primaryImageSmall)) { image in
+          image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+        } placeholder: {
+          PlaceholderView(note: "Display image here")
+        }
+      } else {
+        PlaceholderView(note: "Image not in public domain. URL not valid.")
+      }
+
+      Text(object.creditLine)
+        .font(.caption)
+        .padding()
+        .background(Color.metForeground)
+        .cornerRadius(10)
     }
-    span.setAttribute(key: "ObjectsCount", value: objects.count)
-    
-    OTelLogs.sendLog(
-      scope: "TheMet-Logs",
-      message: "Searched for \(queryTerm), found \(objects.count) objects",
-      span: span)
-    
-    OTelLogs.sendEvent(
-      scope: "TheMet-Logs",
-      eventName: "objects_fetched",
-      data: ["value" : AttributeValue.int(objects.count)])
-    
-    span.end()
-    print("got \(objects.count) objects")
-//    OTelMetrics.sendGauge(
-//      metricsGroup: "TheMet-Metrics",
-//      name: "ObjectsCount",
-//      value: Double(objects.count))
+    .padding(.vertical)
   }
+}
+
+struct PlaceholderView: View {
+  let note: String
+  var body: some View {
+    ZStack {
+      Rectangle()
+        .inset(by: 7)
+        .fill(Color.metForeground)
+        .border(Color.metBackground, width: 7)
+        .padding()
+      Text(note)
+        .foregroundStyle(Color.metBackground)
+    }
+  }
+}
+
+#Preview {
+  ObjectView(
+    object:
+      Object(
+        objectID: 452174,
+        title: "Bahram Gur Slays the Rhino-Wolf",
+        creditLine: "Gift of Arthur A. Houghton Jr., 1970",
+        objectURL: "https://www.metmuseum.org/art/collection/search/452174",
+        isPublicDomain: true,
+        primaryImageSmall: "https://images.metmuseum.org/CRDImages/is/original/DP107178.jpg"))
 }
