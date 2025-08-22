@@ -5,7 +5,7 @@
 //  Created by Ehab Amer on 22.08.25.
 //
 
-import Foundation
+import MetricKit
 
 extension MXNetworkTransferMetric: ValueMetric {
     public func toDictionary() -> [String: String] {

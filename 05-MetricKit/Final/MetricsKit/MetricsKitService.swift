@@ -56,41 +56,13 @@ extension MetricsKitService: MXMetricManagerSubscriber {
     
     payloads.forEach { payload in
       
-      var payloadSpan = OTelSpans.createSpan(
-        scopeName: "MKMetricPayload",
-        name: "Payload",
-        attributes: payload.attributes,
-        parentSpan: parentSpan)
-      
       let payloadSender = MetricPayloadSender(attributes: payload.attributes)
       
-      payloadSender.sendMetric(name: "Cumulative_Wifi_Download", measurement: payload.networkTransferMetrics?.cumulativeWifiDownload)
-      payloadSender.sendMetric(name: "Cumulative_Wifi_Upload", measurement: payload.networkTransferMetrics?.cumulativeWifiUpload)
-      payloadSender.sendMetric(name: "Cumulative_Cell_Download", measurement: payload.networkTransferMetrics?.cumulativeCellularDownload)
-      payloadSender.sendMetric(name: "Cumulative_Cell_Upload", measurement: payload.networkTransferMetrics?.cumulativeCellularUpload)
-      
-      payloadSender.sendMetric(name: "Cumulative_GPU_Time", measurement: payload.gpuMetrics?.cumulativeGPUTime)
+      payloadSender.sendMetric(metric: payload.networkTransferMetrics)
 
-      payloadSender.sendMetric(name: "Background_Normal_App_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeNormalAppExitCount)
-      payloadSender.sendMetric(name: "Background_Abnormal_App_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeAbnormalExitCount)
-      payloadSender.sendMetric(name: "Background_App_Watchdog_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeAppWatchdogExitCount)
-      payloadSender.sendMetric(name: "Background_CPU_Resource_Limit_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeCPUResourceLimitExitCount)
-      payloadSender.sendMetric(name: "Background_Memory_Resource_Limit_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeMemoryResourceLimitExitCount)
-      payloadSender.sendMetric(name: "Background_Memory_Pressure_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeMemoryPressureExitCount)
-      payloadSender.sendMetric(name: "Background_Suspended_With_Locked_File_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeSuspendedWithLockedFileExitCount)
-      payloadSender.sendMetric(name: "Background_Bad_Access_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeBadAccessExitCount)
-      payloadSender.sendMetric(name: "Background_Illegal_Instruction_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeIllegalInstructionExitCount)
-      payloadSender.sendMetric(name: "Background_Task_Assertion_Timeout_Exit_Count", measurement: payload.applicationExitMetrics?.backgroundExitData.cumulativeBackgroundTaskAssertionTimeoutExitCount)
+      payloadSender.sendMetric(metric: payload.gpuMetrics)
 
-      payloadSender.sendMetric(name: "Foreground_Normal_App_Exit_Count", measurement: payload.applicationExitMetrics?.foregroundExitData.cumulativeNormalAppExitCount)
-      payloadSender.sendMetric(name: "Foreground_Abnormal_App_Exit_Count", measurement: payload.applicationExitMetrics?.foregroundExitData.cumulativeAbnormalExitCount)
-      payloadSender.sendMetric(name: "Foreground_App_Watchdog_Exit_Count", measurement: payload.applicationExitMetrics?.foregroundExitData.cumulativeAppWatchdogExitCount)
-      payloadSender.sendMetric(name: "Foreground_Memory_Resource_Limit_Exit_Count", measurement: payload.applicationExitMetrics?.foregroundExitData.cumulativeMemoryResourceLimitExitCount)
-      payloadSender.sendMetric(name: "Foreground_Bad_Access_Exit_Count", measurement: payload.applicationExitMetrics?.foregroundExitData.cumulativeBadAccessExitCount)
-      payloadSender.sendMetric(name: "Foreground_Illegal_Instruction_Exit_Count", measurement: payload.applicationExitMetrics?.foregroundExitData.cumulativeIllegalInstructionExitCount)
-
-      OTelLogs.sendLog(scope: "MKMetricPayload", message: "StartingHistograms", span: payloadSpan)
-      OTelLogs.sendEvent(scope: "MKMetricPayload", data: ["name": .string("Event")], message: "StartingHistograms", span: payloadSpan)
+      payloadSender.sendMetric(metric: payload.applicationExitMetrics)
 
       payloadSender.sendHistogram(
         name: "Application_Resume_Time",
@@ -107,11 +79,7 @@ extension MetricsKitService: MXMetricManagerSubscriber {
         name: "Cellular_Condition_Time",
         values: payload.cellularConditionMetrics?.histogrammedCellularConditionTime,
         histogramInfo: payload.cellularConditionMetrics)
-      
-      payloadSpan.end(.ok)
     }
-    parentSpan.end(.ok)
-    
   }
   
   public func didReceive(_ payloads: [MXDiagnosticPayload]) {
@@ -122,12 +90,23 @@ extension MetricsKitService: MXMetricManagerSubscriber {
       let payloadString = String(data: payloadData, encoding: .utf8) ?? "Invalid JSON"
       
       payload.crashDiagnostics?.forEach { crashDiagnostic in
-        var crahsMessage = """
-      Termination Reason: \(crashDiagnostic.terminationReason ?? "")
-      Exception Type: \(crashDiagnostic.exceptionType)
-      Exception code: \(crashDiagnostic.exceptionCode)
-      StackTrace: \(crashDiagnostic.callStackTree.jsonRepresentation())
-      """
+        
+        var crahsMessage = ""
+        if let terminationReason = crashDiagnostic.terminationReason {
+          crahsMessage += "Termination Reason: \(terminationReason)"
+        }
+      
+        if let exceptionType = crashDiagnostic.exceptionType {
+          crahsMessage += "\nException Type: \(exceptionType)"
+        }
+        
+        if let exceptionCode = crashDiagnostic.exceptionCode {
+          crahsMessage += "\nException Code: \(exceptionCode)"
+        }
+        
+        if let stackTrace = String(data: crashDiagnostic.callStackTree.jsonRepresentation(), encoding: .utf8) {
+          crahsMessage += "\nStackTrace: \(stackTrace)"
+        }
         
         OTelLogs.sendLog(scope: "Crash Diagnostic", timestamp: payload.timeStampBegin, message: crahsMessage)
       }

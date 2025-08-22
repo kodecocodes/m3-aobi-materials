@@ -10,6 +10,7 @@
 		271ABA532E480A940063DBC4 /* OTelSpans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271ABA522E480A940063DBC4 /* OTelSpans.swift */; };
 		271ABA552E480BDA0063DBC4 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271ABA542E480BDA0063DBC4 /* Common.swift */; };
 		271ABA582E480F9F0063DBC4 /* ResourceExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 271ABA572E480F9F0063DBC4 /* ResourceExtension */; };
+		2732F8C82E591B8C00DC28BF /* MXGPUMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2732F8C72E591B8C00DC28BF /* MXGPUMetric.swift */; };
 		27745F302E47C19D0071E4CB /* OpenTelemetryApi in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F2F2E47C19D0071E4CB /* OpenTelemetryApi */; };
 		27745F322E47C19D0071E4CB /* OpenTelemetryProtocolExporter in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F312E47C19D0071E4CB /* OpenTelemetryProtocolExporter */; };
 		27745F342E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F332E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP */; };
@@ -26,7 +27,6 @@
 		27A0F0582E4FDE8000B9B67F /* MXBackgroundExitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0532E4FDE8000B9B67F /* MXBackgroundExitData.swift */; };
 		27B57C432E5917A900EEFFEE /* MXNetworkTransferMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B57C422E5917A900EEFFEE /* MXNetworkTransferMetric.swift */; };
 		27B57C452E5917B100EEFFEE /* MXAppExitMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B57C442E5917B100EEFFEE /* MXAppExitMetric.swift */; };
-		27B57C472E5917B800EEFFEE /* MXAppLaunchMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B57C462E5917B800EEFFEE /* MXAppLaunchMetric.swift */; };
 		27B57C492E5917DF00EEFFEE /* ValueMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B57C482E5917DF00EEFFEE /* ValueMetric.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +34,7 @@
 		18D775BD22AD944300AE281E /* TheMet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		271ABA522E480A940063DBC4 /* OTelSpans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelSpans.swift; sourceTree = "<group>"; };
 		271ABA542E480BDA0063DBC4 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		2732F8C72E591B8C00DC28BF /* MXGPUMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXGPUMetric.swift; sourceTree = "<group>"; };
 		27745F372E47C1AA0071E4CB /* OTelMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelMetrics.swift; sourceTree = "<group>"; };
 		27A0F0192E4FC79100B9B67F /* MetricsKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsKitService.swift; sourceTree = "<group>"; };
 		27A0F02B2E4FC9A600B9B67F /* MetricPayloadSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricPayloadSender.swift; sourceTree = "<group>"; };
@@ -46,7 +47,6 @@
 		27A0F0542E4FDE8000B9B67F /* MXCellularConditionMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXCellularConditionMetric.swift; sourceTree = "<group>"; };
 		27B57C422E5917A900EEFFEE /* MXNetworkTransferMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXNetworkTransferMetric.swift; sourceTree = "<group>"; };
 		27B57C442E5917B100EEFFEE /* MXAppExitMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAppExitMetric.swift; sourceTree = "<group>"; };
-		27B57C462E5917B800EEFFEE /* MXAppLaunchMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAppLaunchMetric.swift; sourceTree = "<group>"; };
 		27B57C482E5917DF00EEFFEE /* ValueMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueMetric.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -145,7 +145,7 @@
 			children = (
 				27B57C442E5917B100EEFFEE /* MXAppExitMetric.swift */,
 				27B57C422E5917A900EEFFEE /* MXNetworkTransferMetric.swift */,
-				27B57C462E5917B800EEFFEE /* MXAppLaunchMetric.swift */,
+				2732F8C72E591B8C00DC28BF /* MXGPUMetric.swift */,
 				27A0F0512E4FDE8000B9B67F /* MXAppLaunchMetric.swift */,
 				27A0F0522E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift */,
 				27A0F0532E4FDE8000B9B67F /* MXBackgroundExitData.swift */,
@@ -259,13 +259,13 @@
 				27A0F01A2E4FC79100B9B67F /* MetricsKitService.swift in Sources */,
 				27B57C492E5917DF00EEFFEE /* ValueMetric.swift in Sources */,
 				27A0F0552E4FDE8000B9B67F /* MXCellularConditionMetric.swift in Sources */,
-				27B57C472E5917B800EEFFEE /* MXAppLaunchMetric.swift in Sources */,
 				27A0F0562E4FDE8000B9B67F /* MXAppLaunchMetric.swift in Sources */,
 				27A0F0572E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift in Sources */,
 				27A0F0582E4FDE8000B9B67F /* MXBackgroundExitData.swift in Sources */,
 				27A0F04D2E4FCE7700B9B67F /* OTelLogs.swift in Sources */,
 				27B57C452E5917B100EEFFEE /* MXAppExitMetric.swift in Sources */,
 				27A0F02F2E4FCB4C00B9B67F /* MXMetricsPayload+Attributes.swift in Sources */,
+				2732F8C82E591B8C00DC28BF /* MXGPUMetric.swift in Sources */,
 				27A0F04F2E4FD71600B9B67F /* HistogrammedMetric.swift in Sources */,
 				27745F392E47C1AA0071E4CB /* OTelMetrics.swift in Sources */,
 			);
@@ -400,7 +400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "TheMet/Preview\\ Content";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 357MM5U6J3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = TheMet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -408,7 +408,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.TheMet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.ehabamer.TheMet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -421,7 +421,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "TheMet/Preview\\ Content";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 357MM5U6J3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = TheMet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -429,7 +429,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.TheMet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.ehabamer.TheMet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -464,7 +464,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/open-telemetry/opentelemetry-swift";
 			requirement = {
-				branch = main;
+				branch = 9c494de9b2fab3c954b22b57f2df5d71049878c0;
 				kind = branch;
 			};
 		};

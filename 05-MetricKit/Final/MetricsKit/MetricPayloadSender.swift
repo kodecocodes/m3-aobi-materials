@@ -43,7 +43,7 @@ class MetricPayloadSender {
   }
   
   class func simpleHistogram<UnitType>(_ histogram: MXHistogram<UnitType>) -> SimpleHistogramBuckets where UnitType: Unit {
-    var buckets = histogram.bucketEnumerator.compactMap { $0 as? MXHistogramBucket }
+    let buckets = histogram.bucketEnumerator.compactMap { $0 as? MXHistogramBucket }
     
     var simpleBuckets: SimpleHistogramBuckets {
       buckets.map { bucket in
@@ -86,7 +86,7 @@ class MetricPayloadSender {
       
       var metricAttributes = self.attributes
       for (key, value) in metric.toDictionary() {
-          metricAttributes[key] = .string(value as! String)
+          metricAttributes[key] = .string(value)
       }
       
       OTelLogs.sendEvent(scope: "MetricsKit", eventName: metric.name, data: metricAttributes)
