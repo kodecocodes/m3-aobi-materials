@@ -11,6 +11,13 @@
 		271ABA552E480BDA0063DBC4 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271ABA542E480BDA0063DBC4 /* Common.swift */; };
 		271ABA582E480F9F0063DBC4 /* ResourceExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 271ABA572E480F9F0063DBC4 /* ResourceExtension */; };
 		2732F8C82E591B8C00DC28BF /* MXGPUMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2732F8C72E591B8C00DC28BF /* MXGPUMetric.swift */; };
+		2757C4542E59FF880074A296 /* MXCPUMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757C4532E59FF880074A296 /* MXCPUMetric.swift */; };
+		2757C4562E5A00080074A296 /* MXAppRunTimeMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757C4552E5A00050074A296 /* MXAppRunTimeMetric.swift */; };
+		2757C4582E5A00600074A296 /* MXLocationActivityMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757C4572E5A005E0074A296 /* MXLocationActivityMetric.swift */; };
+		2757C45A2E5A010A0074A296 /* MXDiskIOMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757C4592E5A01080074A296 /* MXDiskIOMetric.swift */; };
+		2757C45C2E5A01140074A296 /* MXMemoryMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757C45B2E5A01130074A296 /* MXMemoryMetric.swift */; };
+		2757C45E2E5A011E0074A296 /* MXDisplayMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757C45D2E5A011C0074A296 /* MXDisplayMetric.swift */; };
+		2757C4602E5A01250074A296 /* MXAnimationMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2757C45F2E5A01240074A296 /* MXAnimationMetric.swift */; };
 		27745F302E47C19D0071E4CB /* OpenTelemetryApi in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F2F2E47C19D0071E4CB /* OpenTelemetryApi */; };
 		27745F322E47C19D0071E4CB /* OpenTelemetryProtocolExporter in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F312E47C19D0071E4CB /* OpenTelemetryProtocolExporter */; };
 		27745F342E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 27745F332E47C19D0071E4CB /* OpenTelemetryProtocolExporterHTTP */; };
@@ -24,7 +31,6 @@
 		27A0F0552E4FDE8000B9B67F /* MXCellularConditionMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0542E4FDE8000B9B67F /* MXCellularConditionMetric.swift */; };
 		27A0F0562E4FDE8000B9B67F /* MXAppLaunchMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0512E4FDE8000B9B67F /* MXAppLaunchMetric.swift */; };
 		27A0F0572E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0522E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift */; };
-		27A0F0582E4FDE8000B9B67F /* MXBackgroundExitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0F0532E4FDE8000B9B67F /* MXBackgroundExitData.swift */; };
 		27B57C432E5917A900EEFFEE /* MXNetworkTransferMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B57C422E5917A900EEFFEE /* MXNetworkTransferMetric.swift */; };
 		27B57C452E5917B100EEFFEE /* MXAppExitMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B57C442E5917B100EEFFEE /* MXAppExitMetric.swift */; };
 		27B57C492E5917DF00EEFFEE /* ValueMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B57C482E5917DF00EEFFEE /* ValueMetric.swift */; };
@@ -35,6 +41,13 @@
 		271ABA522E480A940063DBC4 /* OTelSpans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelSpans.swift; sourceTree = "<group>"; };
 		271ABA542E480BDA0063DBC4 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		2732F8C72E591B8C00DC28BF /* MXGPUMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXGPUMetric.swift; sourceTree = "<group>"; };
+		2757C4532E59FF880074A296 /* MXCPUMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXCPUMetric.swift; sourceTree = "<group>"; };
+		2757C4552E5A00050074A296 /* MXAppRunTimeMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAppRunTimeMetric.swift; sourceTree = "<group>"; };
+		2757C4572E5A005E0074A296 /* MXLocationActivityMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXLocationActivityMetric.swift; sourceTree = "<group>"; };
+		2757C4592E5A01080074A296 /* MXDiskIOMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDiskIOMetric.swift; sourceTree = "<group>"; };
+		2757C45B2E5A01130074A296 /* MXMemoryMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXMemoryMetric.swift; sourceTree = "<group>"; };
+		2757C45D2E5A011C0074A296 /* MXDisplayMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDisplayMetric.swift; sourceTree = "<group>"; };
+		2757C45F2E5A01240074A296 /* MXAnimationMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAnimationMetric.swift; sourceTree = "<group>"; };
 		27745F372E47C1AA0071E4CB /* OTelMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTelMetrics.swift; sourceTree = "<group>"; };
 		27A0F0192E4FC79100B9B67F /* MetricsKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsKitService.swift; sourceTree = "<group>"; };
 		27A0F02B2E4FC9A600B9B67F /* MetricPayloadSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricPayloadSender.swift; sourceTree = "<group>"; };
@@ -43,7 +56,6 @@
 		27A0F04E2E4FD71600B9B67F /* HistogrammedMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogrammedMetric.swift; sourceTree = "<group>"; };
 		27A0F0512E4FDE8000B9B67F /* MXAppLaunchMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAppLaunchMetric.swift; sourceTree = "<group>"; };
 		27A0F0522E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAppResponsivenessMetric.swift; sourceTree = "<group>"; };
-		27A0F0532E4FDE8000B9B67F /* MXBackgroundExitData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXBackgroundExitData.swift; sourceTree = "<group>"; };
 		27A0F0542E4FDE8000B9B67F /* MXCellularConditionMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXCellularConditionMetric.swift; sourceTree = "<group>"; };
 		27B57C422E5917A900EEFFEE /* MXNetworkTransferMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXNetworkTransferMetric.swift; sourceTree = "<group>"; };
 		27B57C442E5917B100EEFFEE /* MXAppExitMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAppExitMetric.swift; sourceTree = "<group>"; };
@@ -143,13 +155,19 @@
 		27A0F0502E4FDE5700B9B67F /* MetricTypes */ = {
 			isa = PBXGroup;
 			children = (
-				27B57C442E5917B100EEFFEE /* MXAppExitMetric.swift */,
-				27B57C422E5917A900EEFFEE /* MXNetworkTransferMetric.swift */,
+				2757C4532E59FF880074A296 /* MXCPUMetric.swift */,
 				2732F8C72E591B8C00DC28BF /* MXGPUMetric.swift */,
+				27A0F0542E4FDE8000B9B67F /* MXCellularConditionMetric.swift */,
+				2757C4552E5A00050074A296 /* MXAppRunTimeMetric.swift */,
+				2757C4572E5A005E0074A296 /* MXLocationActivityMetric.swift */,
+				27B57C422E5917A900EEFFEE /* MXNetworkTransferMetric.swift */,
 				27A0F0512E4FDE8000B9B67F /* MXAppLaunchMetric.swift */,
 				27A0F0522E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift */,
-				27A0F0532E4FDE8000B9B67F /* MXBackgroundExitData.swift */,
-				27A0F0542E4FDE8000B9B67F /* MXCellularConditionMetric.swift */,
+				2757C4592E5A01080074A296 /* MXDiskIOMetric.swift */,
+				2757C45B2E5A01130074A296 /* MXMemoryMetric.swift */,
+				2757C45D2E5A011C0074A296 /* MXDisplayMetric.swift */,
+				2757C45F2E5A01240074A296 /* MXAnimationMetric.swift */,
+				27B57C442E5917B100EEFFEE /* MXAppExitMetric.swift */,
 			);
 			path = MetricTypes;
 			sourceTree = "<group>";
@@ -252,20 +270,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2757C45A2E5A010A0074A296 /* MXDiskIOMetric.swift in Sources */,
 				27B57C432E5917A900EEFFEE /* MXNetworkTransferMetric.swift in Sources */,
 				271ABA532E480A940063DBC4 /* OTelSpans.swift in Sources */,
 				271ABA552E480BDA0063DBC4 /* Common.swift in Sources */,
 				27A0F02C2E4FC9A600B9B67F /* MetricPayloadSender.swift in Sources */,
+				2757C4542E59FF880074A296 /* MXCPUMetric.swift in Sources */,
 				27A0F01A2E4FC79100B9B67F /* MetricsKitService.swift in Sources */,
 				27B57C492E5917DF00EEFFEE /* ValueMetric.swift in Sources */,
 				27A0F0552E4FDE8000B9B67F /* MXCellularConditionMetric.swift in Sources */,
 				27A0F0562E4FDE8000B9B67F /* MXAppLaunchMetric.swift in Sources */,
 				27A0F0572E4FDE8000B9B67F /* MXAppResponsivenessMetric.swift in Sources */,
-				27A0F0582E4FDE8000B9B67F /* MXBackgroundExitData.swift in Sources */,
+				2757C4562E5A00080074A296 /* MXAppRunTimeMetric.swift in Sources */,
+				2757C4602E5A01250074A296 /* MXAnimationMetric.swift in Sources */,
+				2757C4582E5A00600074A296 /* MXLocationActivityMetric.swift in Sources */,
+				2757C45E2E5A011E0074A296 /* MXDisplayMetric.swift in Sources */,
 				27A0F04D2E4FCE7700B9B67F /* OTelLogs.swift in Sources */,
 				27B57C452E5917B100EEFFEE /* MXAppExitMetric.swift in Sources */,
 				27A0F02F2E4FCB4C00B9B67F /* MXMetricsPayload+Attributes.swift in Sources */,
 				2732F8C82E591B8C00DC28BF /* MXGPUMetric.swift in Sources */,
+				2757C45C2E5A01140074A296 /* MXMemoryMetric.swift in Sources */,
 				27A0F04F2E4FD71600B9B67F /* HistogrammedMetric.swift in Sources */,
 				27745F392E47C1AA0071E4CB /* OTelMetrics.swift in Sources */,
 			);
@@ -309,7 +333,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;

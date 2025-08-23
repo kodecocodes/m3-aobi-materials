@@ -62,6 +62,13 @@ struct ContentView: View {
         }
         .navigationTitle("The Met")
         .toolbar {
+          Button("Crash") {
+            print(store.objects[50])
+          }.foregroundStyle(Color.metBackground)
+            .padding(.horizontal)
+            .background(
+              RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.metBackground, lineWidth: 2))
           Button("Search the Met") {
             query = ""
             showQueryField = true

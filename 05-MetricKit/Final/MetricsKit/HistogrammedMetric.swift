@@ -32,6 +32,7 @@
 
 
 protocol HistogrammedMetric {
-    var boundaries: [Double] { get }
-    var unit: String { get }
+  var boundaries: [Double] { get }
+  var unit: String { get }
+  var name: String { get }
 }

@@ -29,16 +29,20 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
-//
 
 import MetricKit
 
-extension MXGPUMetric: ValueMetric {
+extension MXDisplayMetric: ValueMetric {
   public func toDictionary() -> [String: String] {
+    guard let averagePixelLuminance else {
+      return [:]
+    }
     return [
-      "cumulativeGPUTime": "\(cumulativeGPUTime.value)"
+      "averagePixelLuminance-value": "\(averagePixelLuminance.averageMeasurement)",
+      "averagePixelLuminance-sampleCount": "\(averagePixelLuminance.sampleCount)",
+      "averagePixelLuminance-standardDeviation": "\(averagePixelLuminance.standardDeviation)"
     ]
   }
   
-  public var name: String { "gpu_metric" }
+  public var name: String { "display_metric" }
 }

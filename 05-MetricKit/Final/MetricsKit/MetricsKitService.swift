@@ -46,21 +46,27 @@ public class MetricsKitService: NSObject {
 
 extension MetricsKitService: MXMetricManagerSubscriber {
   public func didReceive(_ payloads: [MXMetricPayload]) {
-    let parentSpan = OTelSpans.createSpan(
-      scopeName: "MKMetricPayload",
-      name: "didReceivePayloads")
-    
-    guard let currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
-      return
-    }
-    
     payloads.forEach { payload in
       
       let payloadSender = MetricPayloadSender(attributes: payload.attributes)
       
+      payloadSender.sendMetric(metric: payload.cpuMetrics)
+      
+      payloadSender.sendMetric(metric: payload.gpuMetrics)
+      
+      payloadSender.sendMetric(metric: payload.applicationTimeMetrics)
+      
+      payloadSender.sendMetric(metric: payload.locationActivityMetrics)
+      
       payloadSender.sendMetric(metric: payload.networkTransferMetrics)
 
-      payloadSender.sendMetric(metric: payload.gpuMetrics)
+      payloadSender.sendMetric(metric: payload.diskIOMetrics)
+      
+      payloadSender.sendMetric(metric: payload.memoryMetrics)
+      
+      payloadSender.sendMetric(metric: payload.displayMetrics)
+      
+      payloadSender.sendMetric(metric: payload.animationMetrics)
 
       payloadSender.sendMetric(metric: payload.applicationExitMetrics)
 
@@ -86,32 +92,76 @@ extension MetricsKitService: MXMetricManagerSubscriber {
     payloads.forEach { payload in
       print("New Diagnostic Payload: --------")
       
-      let payloadData = payload.jsonRepresentation()
-      let payloadString = String(data: payloadData, encoding: .utf8) ?? "Invalid JSON"
-      
       payload.crashDiagnostics?.forEach { crashDiagnostic in
         
-        var crahsMessage = ""
+        var crashMessage = ""
+        
         if let terminationReason = crashDiagnostic.terminationReason {
-          crahsMessage += "Termination Reason: \(terminationReason)"
+          crashMessage += "Termination Reason: \(terminationReason)"
         }
-      
+        
         if let exceptionType = crashDiagnostic.exceptionType {
-          crahsMessage += "\nException Type: \(exceptionType)"
+          crashMessage += "\nException Type: \(exceptionType)"
         }
         
         if let exceptionCode = crashDiagnostic.exceptionCode {
-          crahsMessage += "\nException Code: \(exceptionCode)"
+          crashMessage += "\nException Code: \(exceptionCode)"
         }
-        
         if let stackTrace = String(data: crashDiagnostic.callStackTree.jsonRepresentation(), encoding: .utf8) {
-          crahsMessage += "\nStackTrace: \(stackTrace)"
+          crashMessage += "\nStackTrace: \(stackTrace)"
         }
         
-        OTelLogs.sendLog(scope: "Crash Diagnostic", timestamp: payload.timeStampBegin, message: crahsMessage)
+        OTelLogs.sendLog(scope: "Crash Diagnostic", timestamp: payload.timeStampBegin, message: crashMessage)
       }
       
-      print("Diagnostic Payload: \(payloadString)")
+      payload.cpuExceptionDiagnostics?.forEach { exception in
+        var exeptionMessage = ""
+        
+        exeptionMessage += "Total CPU Time: \(exception.totalCPUTime.value)"
+        exeptionMessage += "\nTotal Sampled CPU Time: \(exception.totalSampledTime.value)"
+        
+        if let stackTrace = String(data: exception.callStackTree.jsonRepresentation(), encoding: .utf8) {
+          exeptionMessage += "\nStackTrace: \(stackTrace)"
+        }
+        
+        OTelLogs.sendLog(scope: "CPU Exception Diagnostic", timestamp: payload.timeStampBegin, message: exeptionMessage)
+      }
+      
+      payload.diskWriteExceptionDiagnostics?.forEach { exception in
+        var exeptionMessage = ""
+        
+        exeptionMessage += "Total Writes Caused: \(exception.totalWritesCaused.value)"
+        
+        if let stackTrace = String(data: exception.callStackTree.jsonRepresentation(), encoding: .utf8) {
+          exeptionMessage += "\nStackTrace: \(stackTrace)"
+        }
+        
+        OTelLogs.sendLog(scope: "Disk Write Exception Diagnostic", timestamp: payload.timeStampBegin, message: exeptionMessage)
+      }
+      
+      payload.hangDiagnostics?.forEach { exception in
+        var exeptionMessage = ""
+        
+        exeptionMessage += "Hang Duration: \(exception.hangDuration.value)"
+        
+        if let stackTrace = String(data: exception.callStackTree.jsonRepresentation(), encoding: .utf8) {
+          exeptionMessage += "\nStackTrace: \(stackTrace)"
+        }
+        
+        OTelLogs.sendLog(scope: "Hang Duration Diagnostic", timestamp: payload.timeStampBegin, message: exeptionMessage)
+      }
+      
+      payload.appLaunchDiagnostics?.forEach { exception in
+        var exeptionMessage = ""
+        
+        exeptionMessage += "Launch Duration: \(exception.launchDuration.value)"
+        
+        if let stackTrace = String(data: exception.callStackTree.jsonRepresentation(), encoding: .utf8) {
+          exeptionMessage += "\nStackTrace: \(stackTrace)"
+        }
+        
+        OTelLogs.sendLog(scope: "App Launch Diagnostic", timestamp: payload.timeStampBegin, message: exeptionMessage)
+      }
     }
   }
 }
