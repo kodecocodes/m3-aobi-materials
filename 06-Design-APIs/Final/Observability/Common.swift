@@ -37,6 +37,7 @@ import OpenTelemetryApi
 
 var resources = DefaultResources().get()
 let grafanaToken = ""
+let grafanaEndpoint = ""
 var currentLoggingLevel = LoggingLevel.maximum
 
 public enum TracingContext {

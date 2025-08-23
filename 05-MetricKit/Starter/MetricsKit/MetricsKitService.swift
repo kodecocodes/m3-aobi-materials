@@ -36,10 +36,16 @@ import OpenTelemetryApi
 public class MetricsKitService: NSObject {
   static var instance = MetricsKitService()
   public class func endCollection() {
-    
+    MXMetricManager.shared.remove(MetricsKitService.instance)
   }
   
   public class func beginCollection() {
+    MXMetricManager.shared.add(MetricsKitService.instance)
+  }
+}
+
+extension MetricsKitService: MXMetricManagerSubscriber {
+  public func didReceive(_ payloads: [MXMetricPayload]) {
     
   }
 }

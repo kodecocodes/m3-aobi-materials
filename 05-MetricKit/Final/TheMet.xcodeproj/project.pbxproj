@@ -424,7 +424,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "TheMet/Preview\\ Content";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 357MM5U6J3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = TheMet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -432,7 +432,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.TheMet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.ehabamer.TheMet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -445,7 +445,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "TheMet/Preview\\ Content";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 357MM5U6J3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = TheMet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -453,7 +453,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.TheMet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.ehabamer.TheMet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

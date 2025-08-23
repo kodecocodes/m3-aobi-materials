@@ -104,12 +104,25 @@ class MetricPayloadSender {
       (measure: bucket.value, count: bucket.count)
     }
     
-    OTelMetrics.sendHistogram(
-      metricsGroup: "MetricsKit",
-      name: name,
-      values: tupleValues,
-      unit: histogramInfo?.unit ?? "",
-      boundaries: histogramInfo?.boundaries ?? [],
-      attributes: attributes)
+    simpleBuckets.forEach { bucket in
+      var metricAttributes = self.attributes
+      
+      metricAttributes["bucketName"] = .double(bucket.value)
+      metricAttributes["bucket_count"] = .int(bucket.count)
+      
+      OTelLogs.sendEvent(
+        scope: "MetricsKit",
+        eventName: name,
+        data: metricAttributes)
+    }
+    
+    
+//    OTelMetrics.sendHistogram(
+//      metricsGroup: "MetricsKit",
+//      name: name,
+//      values: tupleValues,
+//      unit: histogramInfo?.unit ?? "",
+//      boundaries: histogramInfo?.boundaries ?? [],
+//      attributes: attributes)
   }
 }

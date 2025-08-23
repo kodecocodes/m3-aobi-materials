@@ -37,6 +37,8 @@ import OpenTelemetryApi
 
 var resources = DefaultResources().get()
 let grafanaToken = ""
+let grafanaEndpoint = ""
+let grafanaEndpoint = ""
 
 public enum TracingContext {
   @TaskLocal static var activeSpan: (any Span)?

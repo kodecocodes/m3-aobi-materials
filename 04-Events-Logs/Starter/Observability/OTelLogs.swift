@@ -42,7 +42,7 @@ public class OTelLogs {
   var grafanaExporter: OtlpHttpLogExporter!
   
   private init() {
-    let grafanaEndpoint = URL(string: "https://otlp-gateway-prod-eu-west-2.grafana.net/otlp/v1/logs")!
+    let grafanaEndpoint = URL(string: "\(grafanaEndpoint)/v1/logs")!
     let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
     grafanaExporter = OtlpHttpLogExporter(endpoint: grafanaEndpoint, config: grafanaHeaders)
     

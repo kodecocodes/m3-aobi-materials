@@ -37,3 +37,4 @@ import OpenTelemetryApi
 
 var resources = DefaultResources().get()
 let grafanaToken = ""
+let grafanaEndpoint = ""

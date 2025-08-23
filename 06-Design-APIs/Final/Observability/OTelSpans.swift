@@ -51,7 +51,7 @@ public class OTelSpans {
   
   private init() {
     
-    let grafanaEndpoint = URL(string: "https://otlp-gateway-prod-eu-west-2.grafana.net/otlp/v1/traces")!
+    let grafanaEndpoint = URL(string: "\(grafanaEndpoint)/v1/traces")!
     
     let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
     
