@@ -40,6 +40,7 @@ import OpenTelemetryConcurrency
 import ResourceExtension
 
 public typealias SpanType = any SpanBase
+public typealias TracerType = TracerWrapper
 
 public class OTelSpans {
   typealias OpenTelemetry = OpenTelemetryConcurrency.OpenTelemetry
@@ -73,13 +74,13 @@ public class OTelSpans {
   
   public class func tracer(
     scopeName: String
-  ) -> TracerWrapper {
+  ) -> TracerType {
     OTelSpans.shared.tracer(scopeName: scopeName)
   }
   
   internal func tracer(
     scopeName: String
-  ) -> TracerWrapper {
+  ) -> TracerType {
     let instrumentationScopeVersion = "semver:0.1.0"
     
     let tracer = OpenTelemetry.instance.tracerProvider.get(
@@ -288,16 +289,9 @@ public func withActiveSpan<T>(_ operationName: String,
 }
 
 public enum OtelSemanticAttributes: String {
-  case httpRequestMethod = "http.request.method"
-  case httpStatusCode = "http.status_code"
-  
-  case urlPath = "url.path"
-  
   case sourceFunction = "source.function"
   case sourceLine = "source.line"
   case sourceFile = "source.file"
-  
-  case featureName = "feature.name"
 }
 
 extension SpanBase {
