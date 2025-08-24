@@ -42,9 +42,7 @@ public typealias SpanType = any Span
 public typealias TracerType = any Tracer
 
 public class OTelSpans {
-//  typealias OpenTelemetry = OpenTelemetryConcurrency.OpenTelemetry
-  
-  private static var shared = OTelSpans()
+private static var shared = OTelSpans()
   
   let sampleKey = "sampleKey"
   let sampleValue = "sampleValue"
@@ -52,7 +50,6 @@ public class OTelSpans {
   var grafanaHttpExporter: OtlpHttpTraceExporter!
   
   private init() {
-    
     let grafanaEndpoint = URL(string: "\(grafanaEndpoint)/v1/traces")!
     
     let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
@@ -68,7 +65,6 @@ public class OTelSpans {
       .add(spanProcessor: spanProcessor)
       .build()
     )
-//    OpenTelemetry.registerDefaultConcurrencyContextManager()
   }
   
   public class func tracer(
@@ -172,168 +168,11 @@ public func withSpan<T>(_ operationName: String,
   }
 }
 
-
-//public func withSpan<T>(_ operationName: String,
-//                        scopeName: String = "OTelSpans",
-//                        ofKind kind: SpanKind = .internal,
-//                        function: String = #function,
-//                        file: String = #fileID,
-//                        line: UInt = #line,
-//                        _ operation: (SpanType) throws -> T) rethrows -> T {
-//
-//  let tracer = OTelSpans.tracer(scopeName: scopeName)
-//  let spanBuilder = tracer.spanBuilder(spanName: operationName)
-//    .setSpanKind(spanKind: kind)
-//    .setAttribute(key: .sourceFunction, value: function)
-//    .setAttribute(key: .sourceFile, value: file)
-//    .setAttribute(key: .sourceLine, value: String(line))
-//  
-//  if let parentSpan = TracingContext.activeSpan {
-//    spanBuilder.setParent(parentSpan.context)
-//  }
-//  let span = spanBuilder.startSpan()
-//  
-//  defer {
-//    span.end()
-//  }
-//  
-//  do {
-//    return try TracingContext.$activeSpan.withValue(span) {
-//      try operation(span)
-//    }
-//  } catch {
-//    span.status = .error(description: "\(error)")
-//    throw error
-//  }
-//}
-
-//public func withSpan<T>(_ operationName: String,
-//                        scopeName: String = "OTelSpans",
-//                        ofKind kind: SpanKind = .internal,
-//                        function: String = #function,
-//                        file: String = #fileID,
-//                        line: UInt = #line,
-//                        loggingLevel: LoggingLevel = .detailed,
-//                        _ operation: (SpanType?) throws -> T) rethrows -> T {
-//  guard currentLoggingLevel >= loggingLevel else {
-//    return try operation(nil)
-//  }
-//  
-//  let tracer = OTelSpans.tracer(scopeName: scopeName)
-//  return try tracer.spanBuilder(spanName: operationName)
-//    .setSpanKind(spanKind: kind)
-//    .withStartedSpan { span in
-//      span.setAttribute(key: .sourceFunction, value: function)
-//      span.setAttribute(key: .sourceFile, value: file)
-//      span.setAttribute(key: .sourceLine, value: String(line))
-//      do {
-//        return try operation(span)
-//      } catch {
-//        OTelLogs.sendLog(scope: operationName+"-ErrorLogging", message: error.localizedDescription, loggingLevel: loggingLevel, span: span)
-//        span.status = .error(description: "\(error)")
-//        throw error
-//      }
-//    }
-//}
-//
-//public func withSpan<T>(_ operationName: String,
-//                        scopeName: String = "OTelSpans",
-//                        ofKind kind: SpanKind = .internal,
-//                        function: String = #function,
-//                        file: String = #fileID,
-//                        line: UInt = #line,
-//                        loggingLevel: LoggingLevel = .detailed,
-//                        _ operation: (SpanType?) async throws -> T) async rethrows -> T {
-//  guard currentLoggingLevel >= loggingLevel else {
-//    return try await operation(nil)
-//  }
-//  
-//  let tracer = OTelSpans.tracer(scopeName: scopeName)
-//  return try await tracer.spanBuilder(spanName: operationName)
-//    .setSpanKind(spanKind: kind)
-//    .setAttribute(key: .sourceFunction, value: function)
-//    .setAttribute(key: .sourceFile, value: file)
-//    .setAttribute(key: .sourceLine, value: String(line))
-//    .withStartedSpan { span in
-//      do {
-//        return try await operation(span)
-//      } catch {
-//        OTelLogs.sendLog(scope: operationName+"-ErrorLogging", message: error.localizedDescription, loggingLevel: loggingLevel, span: span)
-//        span.status = .error(description: "\(error)")
-//        throw error
-//      }
-//    }
-//}
-//
-//public func withActiveSpan<T>(_ operationName: String,
-//                              scopeName: String = "OTelSpans",
-//                              ofKind kind: SpanKind = .internal,
-//                              function: String = #function,
-//                              file: String = #fileID,
-//                              line: UInt = #line,
-//                              loggingLevel: LoggingLevel = .detailed,
-//                              _ operation: (SpanType?) throws -> T) rethrows -> T {
-//  guard currentLoggingLevel >= loggingLevel else {
-//    return try operation(nil)
-//  }
-//  
-//  let tracer = OTelSpans.tracer(scopeName: scopeName)
-//  return try tracer.spanBuilder(spanName: operationName)
-//    .setSpanKind(spanKind: kind)
-//    .setAttribute(key: .sourceFunction, value: function)
-//    .setAttribute(key: .sourceFile, value: file)
-//    .setAttribute(key: .sourceLine, value: String(line))
-//    .withActiveSpan { span in
-//      do {
-//        return try operation(span)
-//      } catch {
-//        OTelLogs.sendLog(scope: operationName+"-ErrorLogging", message: error.localizedDescription, loggingLevel: loggingLevel, span: span)
-//        span.status = .error(description: "\(error)")
-//        throw error
-//      }
-//    }
-//}
-//
-//public func withActiveSpan<T>(_ operationName: String,
-//                              scopeName: String = "OTelSpans",
-//                              ofKind kind: SpanKind = .internal,
-//                              function: String = #function,
-//                              file: String = #fileID,
-//                              line: UInt = #line,
-//                              loggingLevel: LoggingLevel = .detailed,
-//                              _ operation: (SpanType?) async throws -> T) async rethrows -> T {
-//  guard currentLoggingLevel >= loggingLevel else {
-//    return try await operation(nil)
-//  }
-//  
-//  let tracer = OTelSpans.tracer(scopeName: scopeName)
-//  return try await tracer.spanBuilder(spanName: operationName)
-//    .setSpanKind(spanKind: kind)
-//    .withActiveSpan { span in
-//      span.setAttribute(key: OtelSemanticAttributes.sourceFunction, value: function)
-//      span.setAttribute(key: .sourceFile, value: file)
-//      span.setAttribute(key: .sourceLine, value: String(line))
-//      do {
-//        return try await operation(span)
-//      } catch {
-//        OTelLogs.sendLog(scope: operationName+"-ErrorLogging", message: error.localizedDescription, loggingLevel: loggingLevel, span: span)
-//        span.status = .error(description: "\(error)")
-//        throw error
-//      }
-//    }
-//}
-
 public enum OtelSemanticAttributes: String {
   case sourceFunction = "source.function"
   case sourceLine = "source.line"
   case sourceFile = "source.file"
 }
-
-//extension SpanBase {
-//  public func setAttribute(key: OtelSemanticAttributes, value: String) {
-//    setAttribute(key: key.rawValue, value: .string(value))
-//  }
-//}
 
 extension SpanBuilderBase {
   public func setAttribute(key: OtelSemanticAttributes, value: String) -> Self {
