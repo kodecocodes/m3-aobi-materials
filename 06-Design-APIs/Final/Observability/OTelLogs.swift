@@ -41,7 +41,7 @@ public class OTelLogs {
   
   var grafanaExporter: OtlpHttpLogExporter!
   
-  public func basicMetricConfiguration() {
+  private init() {
     let grafanaEndpoint = URL(string: "\(grafanaEndpoint)/v1/logs")!
     let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
     grafanaExporter = OtlpHttpLogExporter(endpoint: grafanaEndpoint, config: grafanaHeaders)
@@ -59,7 +59,7 @@ public class OTelLogs {
     data: [String: AttributeValue],
     message: String,
     loggingLevel: LoggingLevel = .detailed,
-    span: (any Span)? = nil
+    span: SpanType? = nil
   ) {
     shared.sendEvent(
       scope: scope,
@@ -76,7 +76,7 @@ public class OTelLogs {
     data: [String: AttributeValue],
     message: String,
     loggingLevel: LoggingLevel = .detailed,
-    span: (any Span)? = nil
+    span: SpanType? = nil
   ) {
     guard currentLoggingLevel >= loggingLevel else { return }
     let openTelemetry = OpenTelemetry.instance
@@ -96,7 +96,7 @@ public class OTelLogs {
     timestamp: Date = Date(),
     message: String,
     loggingLevel: LoggingLevel = .detailed,
-    span: (any Span)? = nil
+    span: SpanType? = nil
   ) {
     shared.sendLog(scope: scope, timestamp: timestamp, message: message, loggingLevel: loggingLevel, span: span)
   }
@@ -106,8 +106,9 @@ public class OTelLogs {
     timestamp: Date = Date(),
     message: String,
     loggingLevel: LoggingLevel = .detailed,
-    span: (any Span)? = nil
+    span: SpanType? = nil
   ) {
+    guard currentLoggingLevel >= loggingLevel else { return }
     let openTelemetry = OpenTelemetry.instance
     let otelLogger = openTelemetry.loggerProvider.loggerBuilder(instrumentationScopeName: scope).setEventDomain("Device") .build()
     let log = otelLogger.logRecordBuilder()

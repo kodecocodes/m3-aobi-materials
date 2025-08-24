@@ -39,6 +39,8 @@ import OpenTelemetryProtocolExporterHttp
 import OpenTelemetryConcurrency
 import ResourceExtension
 
+public typealias SpanType = any SpanBase
+
 public class OTelSpans {
   typealias OpenTelemetry = OpenTelemetryConcurrency.OpenTelemetry
   
@@ -92,11 +94,11 @@ public class OTelSpans {
     attributes: [String: AttributeValue] = [:],
     spanKind: SpanKind = .client,
     spanStartTime: Date? = nil,
-    parentSpan: (any Span)? = nil,
-  ) -> (any Span) {
+    parentSpan: SpanType? = nil,
+  ) -> SpanType {
     var spanBuilder = tracer(scopeName: scopeName).spanBuilder(spanName: name).setSpanKind(spanKind: spanKind)
     if let parentSpan {
-      spanBuilder = spanBuilder.setParent(parentSpan)
+      spanBuilder = spanBuilder.setParent(parentSpan.context)
     }
     
     if let spanStartTime {
@@ -116,8 +118,8 @@ public class OTelSpans {
     attributes: [String: AttributeValue] = [:],
     spanKind: SpanKind = .client,
     spanStartTime: Date? = nil,
-    parentSpan: (any Span)? = nil,
-  ) -> (any Span) {
+    parentSpan: SpanType? = nil,
+  ) -> SpanType {
     shared.createSpan(scopeName: scopeName,
                       name: name,
                       attributes: attributes,
@@ -141,7 +143,7 @@ public func withSpan<T>(_ operationName: String,
                         file: String = #fileID,
                         line: UInt = #line,
                         loggingLevel: LoggingLevel = .detailed,
-                        _ operation: ((any SpanBase)?) throws -> T) rethrows -> T {
+                        _ operation: (SpanType?) throws -> T) rethrows -> T {
   guard currentLoggingLevel >= loggingLevel else {
     return try operation(nil)
   }
@@ -153,7 +155,13 @@ public func withSpan<T>(_ operationName: String,
       span.setAttribute(key: .sourceFunction, value: function)
       span.setAttribute(key: .sourceFile, value: file)
       span.setAttribute(key: .sourceLine, value: String(line))
-      return try operation(span)
+      do {
+        return try operation(span)
+      } catch {
+        OTelLogs.sendLog(scope: operationName+"-ErrorLogging", message: error.localizedDescription, loggingLevel: loggingLevel, span: span)
+        span.status = .error(description: "\(error)")
+        throw error
+      }
     }
 }
 
@@ -163,8 +171,8 @@ public func withSpan<T>(_ operationName: String,
 //                        function: String = #function,
 //                        file: String = #fileID,
 //                        line: UInt = #line,
-//                        _ operation: (any SpanBase) throws -> T) rethrows -> T {
-//  
+//                        _ operation: (SpanType) throws -> T) rethrows -> T {
+//
 //  let tracer = OTelSpans.tracer(scopeName: scopeName)
 //  let spanBuilder = tracer.spanBuilder(spanName: operationName)
 //    .setSpanKind(spanKind: kind)
@@ -199,7 +207,7 @@ public func withSpan<T>(_ operationName: String,
                         file: String = #fileID,
                         line: UInt = #line,
                         loggingLevel: LoggingLevel = .detailed,
-                        _ operation: ((any SpanBase)?) async throws -> T) async rethrows -> T {
+                        _ operation: (SpanType?) async throws -> T) async rethrows -> T {
   guard currentLoggingLevel >= loggingLevel else {
     return try await operation(nil)
   }
@@ -211,7 +219,13 @@ public func withSpan<T>(_ operationName: String,
     .setAttribute(key: .sourceFile, value: file)
     .setAttribute(key: .sourceLine, value: String(line))
     .withStartedSpan { span in
-      return try await operation(span)
+      do {
+        return try await operation(span)
+      } catch {
+        OTelLogs.sendLog(scope: operationName+"-ErrorLogging", message: error.localizedDescription, loggingLevel: loggingLevel, span: span)
+        span.status = .error(description: "\(error)")
+        throw error
+      }
     }
 }
 
@@ -222,7 +236,7 @@ public func withActiveSpan<T>(_ operationName: String,
                               file: String = #fileID,
                               line: UInt = #line,
                               loggingLevel: LoggingLevel = .detailed,
-                              _ operation: ((any SpanBase)?) throws -> T) rethrows -> T {
+                              _ operation: (SpanType?) throws -> T) rethrows -> T {
   guard currentLoggingLevel >= loggingLevel else {
     return try operation(nil)
   }
@@ -234,7 +248,13 @@ public func withActiveSpan<T>(_ operationName: String,
     .setAttribute(key: .sourceFile, value: file)
     .setAttribute(key: .sourceLine, value: String(line))
     .withActiveSpan { span in
-      return try operation(span)
+      do {
+        return try operation(span)
+      } catch {
+        OTelLogs.sendLog(scope: operationName+"-ErrorLogging", message: error.localizedDescription, loggingLevel: loggingLevel, span: span)
+        span.status = .error(description: "\(error)")
+        throw error
+      }
     }
 }
 
@@ -245,7 +265,7 @@ public func withActiveSpan<T>(_ operationName: String,
                               file: String = #fileID,
                               line: UInt = #line,
                               loggingLevel: LoggingLevel = .detailed,
-                              _ operation: ((any SpanBase)?) async throws -> T) async rethrows -> T {
+                              _ operation: (SpanType?) async throws -> T) async rethrows -> T {
   guard currentLoggingLevel >= loggingLevel else {
     return try await operation(nil)
   }
@@ -257,7 +277,13 @@ public func withActiveSpan<T>(_ operationName: String,
       span.setAttribute(key: OtelSemanticAttributes.sourceFunction, value: function)
       span.setAttribute(key: .sourceFile, value: file)
       span.setAttribute(key: .sourceLine, value: String(line))
-      return try await operation(span)
+      do {
+        return try await operation(span)
+      } catch {
+        OTelLogs.sendLog(scope: operationName+"-ErrorLogging", message: error.localizedDescription, loggingLevel: loggingLevel, span: span)
+        span.status = .error(description: "\(error)")
+        throw error
+      }
     }
 }
 

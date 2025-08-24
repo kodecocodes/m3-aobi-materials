@@ -41,7 +41,7 @@ let grafanaEndpoint = ""
 var currentLoggingLevel = LoggingLevel.maximum
 
 public enum TracingContext {
-  @TaskLocal static var activeSpan: (any Span)?
+  @TaskLocal static var activeSpan: SpanType?
 }
 
 public enum LoggingLevel: Int, Comparable {
