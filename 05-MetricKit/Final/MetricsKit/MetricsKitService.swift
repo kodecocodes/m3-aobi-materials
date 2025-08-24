@@ -111,7 +111,7 @@ extension MetricsKitService: MXMetricManagerSubscriber {
           crashMessage += "\nStackTrace: \(stackTrace)"
         }
         
-        OTelLogs.sendLog(scope: "Crash Diagnostic", timestamp: payload.timeStampBegin, message: crashMessage)
+        OTelLogs.sendLog(scope: "Crash Diagnostic", message: crashMessage)
       }
       
       payload.cpuExceptionDiagnostics?.forEach { exception in
@@ -124,7 +124,7 @@ extension MetricsKitService: MXMetricManagerSubscriber {
           exeptionMessage += "\nStackTrace: \(stackTrace)"
         }
         
-        OTelLogs.sendLog(scope: "CPU Exception Diagnostic", timestamp: payload.timeStampBegin, message: exeptionMessage)
+        OTelLogs.sendLog(scope: "CPU Exception Diagnostic", message: exeptionMessage)
       }
       
       payload.diskWriteExceptionDiagnostics?.forEach { exception in
@@ -136,7 +136,7 @@ extension MetricsKitService: MXMetricManagerSubscriber {
           exeptionMessage += "\nStackTrace: \(stackTrace)"
         }
         
-        OTelLogs.sendLog(scope: "Disk Write Exception Diagnostic", timestamp: payload.timeStampBegin, message: exeptionMessage)
+        OTelLogs.sendLog(scope: "Disk Write Exception Diagnostic", message: exeptionMessage)
       }
       
       payload.hangDiagnostics?.forEach { exception in
@@ -148,7 +148,7 @@ extension MetricsKitService: MXMetricManagerSubscriber {
           exeptionMessage += "\nStackTrace: \(stackTrace)"
         }
         
-        OTelLogs.sendLog(scope: "Hang Duration Diagnostic", timestamp: payload.timeStampBegin, message: exeptionMessage)
+        OTelLogs.sendLog(scope: "Hang Duration Diagnostic", message: exeptionMessage)
       }
       
       payload.appLaunchDiagnostics?.forEach { exception in
@@ -160,7 +160,7 @@ extension MetricsKitService: MXMetricManagerSubscriber {
           exeptionMessage += "\nStackTrace: \(stackTrace)"
         }
         
-        OTelLogs.sendLog(scope: "App Launch Diagnostic", timestamp: payload.timeStampBegin, message: exeptionMessage)
+        OTelLogs.sendLog(scope: "App Launch Diagnostic", message: exeptionMessage)
       }
     }
   }

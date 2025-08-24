@@ -89,7 +89,10 @@ class MetricPayloadSender {
           metricAttributes[key] = .string(value)
       }
       
-      OTelLogs.sendEvent(scope: "MetricsKit", eventName: metric.name, data: metricAttributes)
+      OTelLogs.sendEvent(
+        scope: "MetricsKit",
+        eventName: metric.name,
+        data: metricAttributes)
   }
   
   func sendHistogram<T>(
@@ -100,11 +103,10 @@ class MetricPayloadSender {
     guard let values else { return }
     let simpleBuckets = MetricPayloadSender.simpleHistogram(values)
     
-    let tupleValues = simpleBuckets.map { bucket in
-      (measure: bucket.value, count: bucket.count)
-    }
-    
     simpleBuckets.forEach { bucket in
+      
+      guard bucket.count > 0 else { return }
+      
       var metricAttributes = self.attributes
       
       metricAttributes["bucketName"] = .double(bucket.value)
@@ -115,14 +117,5 @@ class MetricPayloadSender {
         eventName: name,
         data: metricAttributes)
     }
-    
-    
-//    OTelMetrics.sendHistogram(
-//      metricsGroup: "MetricsKit",
-//      name: name,
-//      values: tupleValues,
-//      unit: histogramInfo?.unit ?? "",
-//      boundaries: histogramInfo?.boundaries ?? [],
-//      attributes: attributes)
   }
 }
