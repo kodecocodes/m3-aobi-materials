@@ -1,4 +1,4 @@
-/// Copyright (c) 2025 Kodeco LLC
+/// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,55 +31,46 @@
 /// THE SOFTWARE.
 
 import Foundation
-import OpenTelemetryApi
-import OpenTelemetrySdk
-import OpenTelemetryProtocolExporterCommon
-import OpenTelemetryProtocolExporterHttp
 
-public class OTelMetrics {
-  private static var shared = OTelMetrics()
-  
-  var grafanaExporter: OtlpHttpMetricExporter!
-  
-  private init() {
-    guard !grafanaToken.isEmpty else {
-      print("You forgot to add your grafana token!!!")
-      return
+class TheMetStore: ObservableObject {
+  @Published var objects: [Object] = []
+  let service = TheMetService()
+  let maxIndex: Int
+
+  init(_ maxIndex: Int = 30) {
+    self.maxIndex = maxIndex
+  }
+
+  func fetchObjects(for queryTerm: String) async throws {
+    let span = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "fetchObjects")
+    span.setAttribute(key: "SearchKeyword", value: queryTerm)
+    try await TracingContext.$activeSpan.withValue(span) {
+      if let objectIDs = try await service.getObjectIDs(from: queryTerm) {
+        span.setAttribute(key: "ObjectIDsCount", value: objectIDs.objectIDs.count)
+        for (index, objectID) in objectIDs.objectIDs.enumerated()
+        where index < maxIndex {
+          let childSpan = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "FetchingObject", parentSpan: TracingContext.activeSpan)
+          childSpan.setAttribute(key: "objectID", value: objectID)
+          var object: Object?
+          try await TracingContext.$activeSpan.withValue(childSpan) {
+            object = try await service.getObject(from: objectID)
+          }
+          if let object {
+            await MainActor.run {
+              objects.append(object)
+            }
+            childSpan.status = .ok
+          }
+          childSpan.end()
+        }
+      }
     }
-    
-    let grafanaEndpoint = URL(string: "\(grafanaEndpoint)/v1/metrics")!
-    let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
-    grafanaExporter = OtlpHttpMetricExporter(endpoint: grafanaEndpoint, config: grafanaHeaders)
-    
-    OpenTelemetry.registerMeterProvider(meterProvider: MeterProviderSdk.builder()
-      .registerView(selector: InstrumentSelector.builder().setInstrument(name: ".*").build(), view: View.builder().build())
-                                        
-      .registerMetricReader(reader: PeriodicMetricReaderBuilder(exporter: grafanaExporter).setInterval(timeInterval: 5).build())
-      .build()
-    )
-  }
-  
-  public func sendGauge(
-    metricsGroup: String,
-    name: String,
-    value: Double,
-    attributes: [String: AttributeValue] = [:]
-  ) {
-    let openTelemetry = OpenTelemetry.instance
-    
-    let meter = openTelemetry.meterProvider.meterBuilder(name: metricsGroup).build()
-    
-    var gauge = meter.gaugeBuilder(name: name).build()
-    
-    gauge.record(value: value, attributes: attributes)
-  }
-  
-  public class func sendGauge(
-    metricsGroup: String,
-    name: String,
-    value: Double,
-    attributes: [String: AttributeValue] = [:]
-  ) {
-    shared.sendGauge(metricsGroup: metricsGroup, name: name, value: value, attributes: attributes)
+    span.setAttribute(key: "ObjectsCount", value: objects.count)
+    span.end()
+    print("got \(objects.count) objects")
+    OTelMetrics.sendGauge(
+      metricsGroup: "TheMet-Metrics",
+      name: "ObjectsCount",
+      value: Double(objects.count))
   }
 }

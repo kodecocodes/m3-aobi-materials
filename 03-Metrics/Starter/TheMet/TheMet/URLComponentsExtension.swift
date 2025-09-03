@@ -1,4 +1,4 @@
-/// Copyright (c) 2025 Kodeco LLC
+/// Copyright (c) 2025 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -31,55 +31,13 @@
 /// THE SOFTWARE.
 
 import Foundation
-import OpenTelemetryApi
-import OpenTelemetrySdk
-import OpenTelemetryProtocolExporterCommon
-import OpenTelemetryProtocolExporterHttp
 
-public class OTelMetrics {
-  private static var shared = OTelMetrics()
-  
-  var grafanaExporter: OtlpHttpMetricExporter!
-  
-  private init() {
-    guard !grafanaToken.isEmpty else {
-      print("You forgot to add your grafana token!!!")
-      return
-    }
-    
-    let grafanaEndpoint = URL(string: "\(grafanaEndpoint)/v1/metrics")!
-    let grafanaHeaders = OtlpConfiguration(headers: [("Authorization", "Basic \(grafanaToken)")], exportAsJson: true)
-    grafanaExporter = OtlpHttpMetricExporter(endpoint: grafanaEndpoint, config: grafanaHeaders)
-    
-    OpenTelemetry.registerMeterProvider(meterProvider: MeterProviderSdk.builder()
-      .registerView(selector: InstrumentSelector.builder().setInstrument(name: ".*").build(), view: View.builder().build())
-                                        
-      .registerMetricReader(reader: PeriodicMetricReaderBuilder(exporter: grafanaExporter).setInterval(timeInterval: 5).build())
-      .build()
-    )
-  }
-  
-  public func sendGauge(
-    metricsGroup: String,
-    name: String,
-    value: Double,
-    attributes: [String: AttributeValue] = [:]
-  ) {
-    let openTelemetry = OpenTelemetry.instance
-    
-    let meter = openTelemetry.meterProvider.meterBuilder(name: metricsGroup).build()
-    
-    var gauge = meter.gaugeBuilder(name: name).build()
-    
-    gauge.record(value: value, attributes: attributes)
-  }
-  
-  public class func sendGauge(
-    metricsGroup: String,
-    name: String,
-    value: Double,
-    attributes: [String: AttributeValue] = [:]
-  ) {
-    shared.sendGauge(metricsGroup: metricsGroup, name: name, value: value, attributes: attributes)
+public extension URLComponents {
+  /// Maps a dictionary into `[URLQueryItem]` then assigns it to the
+  /// `queryItems` property of this `URLComponents` instance.
+  /// From [Alfian Losari's blog.](https://www.alfianlosari.com/posts/building-safe-url-in-swift-using-urlcomponents-and-urlqueryitem/)
+  /// - Parameter parameters: Dictionary of query parameter names and values
+  mutating func setQueryItems(with parameters: [String: String]) {
+    self.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
   }
 }
