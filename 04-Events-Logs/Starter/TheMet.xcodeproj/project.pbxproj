@@ -390,10 +390,10 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		27745F2E2E47C19D0071E4CB /* XCRemoteSwiftPackageReference "opentelemetry-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Waheiba/opentelemetry-swift";
+			repositoryURL = "https://github.com/open-telemetry/opentelemetry-swift";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
