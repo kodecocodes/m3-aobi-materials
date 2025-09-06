@@ -31,6 +31,7 @@
 /// THE SOFTWARE.
 
 import Foundation
+import OpenTelemetryApi
 
 class TheMetStore: ObservableObject {
   @Published var objects: [Object] = []
@@ -78,10 +79,5 @@ class TheMetStore: ObservableObject {
       data: ["value" : AttributeValue.int(objects.count)])
     
     span.end()
-    print("got \(objects.count) objects")
-//    OTelMetrics.sendGauge(
-//      metricsGroup: "TheMet-Metrics",
-//      name: "ObjectsCount",
-//      value: Double(objects.count))
   }
 }

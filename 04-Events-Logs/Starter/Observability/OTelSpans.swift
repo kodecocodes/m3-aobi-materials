@@ -84,7 +84,7 @@ public class OTelSpans {
     attributes: [String: AttributeValue] = [:],
     spanKind: SpanKind = .client,
     spanStartTime: Date? = nil,
-    parentSpan: (any Span)? = nil,
+    parentSpan: (any Span)? = nil
   ) -> (any Span) {
     var spanBuilder = tracer(scopeName: scopeName).spanBuilder(spanName: name).setSpanKind(spanKind: spanKind)
     if let parentSpan {
@@ -108,7 +108,7 @@ public class OTelSpans {
     attributes: [String: AttributeValue] = [:],
     spanKind: SpanKind = .client,
     spanStartTime: Date? = nil,
-    parentSpan: (any Span)? = nil,
+    parentSpan: (any Span)? = nil
   ) -> (any Span) {
     shared.createSpan(scopeName: scopeName,
                       name: name,

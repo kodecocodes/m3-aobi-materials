@@ -31,7 +31,7 @@
 /// THE SOFTWARE.
 
 import Foundation
-@_exported import OpenTelemetryApi
+import OpenTelemetryApi
 import OpenTelemetrySdk
 import OpenTelemetryProtocolExporterCommon
 import OpenTelemetryProtocolExporterHttp

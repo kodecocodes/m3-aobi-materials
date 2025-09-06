@@ -84,7 +84,7 @@ public class OTelSpans {
     attributes: [String: AttributeValue] = [:],
     spanKind: SpanKind = .client,
     spanStartTime: Date? = nil,
-    parentSpan: (any Span)? = nil,
+    parentSpan: (any Span)? = nil
   ) -> (any Span) {
     var spanBuilder = tracer(scopeName: scopeName).spanBuilder(spanName: name).setSpanKind(spanKind: spanKind)
     if let parentSpan {
@@ -108,7 +108,7 @@ public class OTelSpans {
     attributes: [String: AttributeValue] = [:],
     spanKind: SpanKind = .client,
     spanStartTime: Date? = nil,
-    parentSpan: (any Span)? = nil,
+    parentSpan: (any Span)? = nil
   ) -> (any Span) {
     shared.createSpan(scopeName: scopeName,
                       name: name,
@@ -125,101 +125,3 @@ public extension Span {
     end()
   }
 }
-
-//public func withSpan<T>(_ operationName: String,
-//                        scopeName: String = "OTelSpans",
-//                        ofKind kind: SpanKind = .internal,
-//                        function: String = #function,
-//                        file: String = #fileID,
-//                        line: UInt = #line,
-//                        _ operation: (any SpanBase) throws -> T) rethrows -> T {
-//  
-//  let tracer = OTelSpans.shared.tracer(scopeName: scopeName)
-//  return try tracer.spanBuilder(spanName: operationName)
-//    .setSpanKind(spanKind: kind)
-//    .withStartedSpan { span in
-//      span.setAttribute(key: .sourceFunction, value: function)
-//      span.setAttribute(key: .sourceFile, value: file)
-//      span.setAttribute(key: .sourceLine, value: String(line))
-//      return try operation(span)
-//    }
-//}
-//
-//
-//public func withSpan<T>(_ operationName: String,
-//                        scopeName: String = "OTelSpans",
-//                        ofKind kind: SpanKind = .internal,
-//                        function: String = #function,
-//                        file: String = #fileID,
-//                        line: UInt = #line,
-//                        _ operation: (any SpanBase) async throws -> T) async rethrows -> T {
-//  
-//  let tracer = OTelSpans.shared.tracer(scopeName: scopeName)
-//  return try await tracer.spanBuilder(spanName: operationName)
-//    .setSpanKind(spanKind: kind)
-//    .withStartedSpan { span in
-//      span.setAttribute(key: .sourceFunction, value: function)
-//      span.setAttribute(key: .sourceFile, value: file)
-//      span.setAttribute(key: .sourceLine, value: String(line))
-//      return try await operation(span)
-//    }
-//}
-//
-//public func withActiveSpan<T>(_ operationName: String,
-//                              scopeName: String = "OTelSpans",
-//                              ofKind kind: SpanKind = .internal,
-//                              function: String = #function,
-//                              file: String = #fileID,
-//                              line: UInt = #line,
-//                              _ operation: (any SpanBase) throws -> T) rethrows -> T {
-//  
-//  let tracer = OTelSpans.shared.tracer(scopeName: scopeName)
-//  return try tracer.spanBuilder(spanName: operationName)
-//    .setSpanKind(spanKind: kind)
-//    .withActiveSpan { span in
-//      span.setAttribute(key: .sourceFunction, value: function)
-//      span.setAttribute(key: .sourceFile, value: file)
-//      span.setAttribute(key: .sourceLine, value: String(line))
-//      return try operation(span)
-//    }
-//}
-//
-//
-//public func withActiveSpan<T>(_ operationName: String,
-//                              scopeName: String = "OTelSpans",
-//                              ofKind kind: SpanKind = .internal,
-//                              function: String = #function,
-//                              file: String = #fileID,
-//                              line: UInt = #line,
-//                              _ operation: (any SpanBase) async throws -> T) async rethrows -> T {
-//  
-//  let tracer = OTelSpans.shared.tracer(scopeName: scopeName)
-//  return try await tracer.spanBuilder(spanName: operationName)
-//    .setSpanKind(spanKind: kind)
-//    .withActiveSpan { span in
-//      span.setAttribute(key: OtelSemanticAttributes.sourceFunction, value: function)
-//      span.setAttribute(key: .sourceFile, value: file)
-//      span.setAttribute(key: .sourceLine, value: String(line))
-//      return try await operation(span)
-//    }
-//}
-//
-//
-//public enum OtelSemanticAttributes: String {
-//  case httpRequestMethod = "http.request.method"
-//  case httpStatusCode = "http.status_code"
-//  
-//  case urlPath = "url.path"
-//  
-//  case sourceFunction = "source.function"
-//  case sourceLine = "source.line"
-//  case sourceFile = "source.file"
-//  
-//  case featureName = "feature.name"
-//}
-//
-//extension SpanBase {
-//  public func setAttribute(key: OtelSemanticAttributes, value: String) {
-//    setAttribute(key: key.rawValue, value: .string(value))
-//  }
-//}

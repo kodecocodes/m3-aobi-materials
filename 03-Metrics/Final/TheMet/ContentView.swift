@@ -79,11 +79,7 @@ struct ContentView: View {
             fetchObjectsTask = Task {
               do {
                 store.objects = []
-                let span = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "Search-Fetch")
-                try await TracingContext.$activeSpan.withValue(span) {
-                  try await store.fetchObjects(for: query)
-                }
-                span.end(.ok)
+                try await store.fetchObjects(for: query)
               } catch {}
             }
           }
@@ -103,11 +99,7 @@ struct ContentView: View {
     }
     .task {
       do {
-        let span = OTelSpans.createSpan(scopeName: "TheMet-Tracing", name: "Initial-Fetch")
-        try await TracingContext.$activeSpan.withValue(span) {
-          try await store.fetchObjects(for: query)
-        }
-        span.end(.ok)
+        try await store.fetchObjects(for: query)
       } catch {}
     }
   }

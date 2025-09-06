@@ -80,7 +80,7 @@ public class OTelSpans {
   public func createSpan(
     scopeName: String,
     name: String,
-    parentSpan: (any Span)? = nil,
+    parentSpan: (any Span)? = nil
   ) -> (any Span) {
     var spanBuilder = tracer(scopeName: scopeName)
       .spanBuilder(spanName: name)
@@ -96,7 +96,7 @@ public class OTelSpans {
   public class func createSpan(
     scopeName: String,
     name: String,
-    parentSpan: (any Span)? = nil,
+    parentSpan: (any Span)? = nil
   ) -> (any Span) {
     shared.createSpan(scopeName: scopeName,
                       name: name,
