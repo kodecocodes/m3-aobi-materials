@@ -35,21 +35,21 @@ import OpenTelemetryApi
 import MetricKit
 
 extension MXMetricPayload {
-    var attributes: [String: AttributeValue] {
-        var attributes: [String: AttributeValue] = [:]
-
-        guard let metaData = self.metaData else {
-            return [:]
-        }
-
-        attributes["appBundleVersion"] = .string(metaData.applicationBuildVersion)
-        attributes["deviceType"] = .string(metaData.deviceType)
-        attributes["osVersion"] = .string(metaData.osVersion)
-        attributes["platformArchitecture"] = .string(metaData.platformArchitecture)
-        if #available(iOS 17.0, *) {
-            attributes["lowPowerModeEnabled"] = .bool(metaData.lowPowerModeEnabled)
-        }
-        attributes["regionFormat"] = .string(metaData.regionFormat)
-        return attributes
+  var attributes: [String: AttributeValue] {
+    var attributes: [String: AttributeValue] = [:]
+    
+    guard let metaData = self.metaData else {
+      return [:]
     }
+    
+    attributes["appBundleVersion"] = .string(metaData.applicationBuildVersion)
+    attributes["deviceType"] = .string(metaData.deviceType)
+    attributes["osVersion"] = .string(metaData.osVersion)
+    attributes["platformArchitecture"] = .string(metaData.platformArchitecture)
+    if #available(iOS 17.0, *) {
+      attributes["lowPowerModeEnabled"] = .bool(metaData.lowPowerModeEnabled)
+    }
+    attributes["regionFormat"] = .string(metaData.regionFormat)
+    return attributes
+  }
 }

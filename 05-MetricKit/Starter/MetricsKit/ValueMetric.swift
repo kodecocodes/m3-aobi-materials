@@ -32,6 +32,6 @@
 
 
 public protocol ValueMetric {
-    func toDictionary() -> [String: String]
-    var name: String { get }
+  func toDictionary() -> [String: String]
+  var name: String { get }
 }
