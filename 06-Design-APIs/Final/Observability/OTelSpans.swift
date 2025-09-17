@@ -166,36 +166,36 @@ public func withSpan<T>(_ operationName: String,
     }
 }
 
-//public func withSpan<T>(_ operationName: String,
+//public func withSpan<T>(_ operationName: String,  // 1
 //                        scopeName: String = "OTelSpans",
 //                        ofKind kind: SpanKind = .internal,
 //                        function: String = #function,
 //                        file: String = #fileID,
 //                        line: UInt = #line,
-//                        _ operation: (SpanType) throws -> T) rethrows -> T {
-//
-//  let tracer = OTelSpans.tracer(scopeName: scopeName)
+//                        _ operation: (SpanType) async throws -> T
+//) async rethrows -> T {
+//  let tracer = OTelSpans.tracer(scopeName: scopeName)   // 2
 //  let spanBuilder = tracer.spanBuilder(spanName: operationName)
 //    .setSpanKind(spanKind: kind)
 //    .setAttribute(key: .sourceFunction, value: function)
 //    .setAttribute(key: .sourceFile, value: file)
 //    .setAttribute(key: .sourceLine, value: String(line))
-//  
+//
 //  if let parentSpan = TracingContext.activeSpan {
 //    spanBuilder.setParent(parentSpan.context)
 //  }
-//  let span = spanBuilder.startSpan()
+//  let span = spanBuilder.startSpan()  // 4
 //  
-//  defer {
+//  defer {   // 5
 //    span.end()
 //  }
 //  
 //  do {
-//    return try TracingContext.$activeSpan.withValue(span) {
-//      try operation(span)
+//    return try await TracingContext.$activeSpan.withValue(span) {
+//      try await operation(span)
 //    }
 //  } catch {
-//    span.recordException(error as NSError)
+//    OTelLogs.sendLog(scope: operationName+"-ErrorLogging", message: error.localizedDescription, span: span)
 //    span.status = .error(description: "\(error)")
 //    throw error
 //  }

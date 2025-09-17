@@ -66,9 +66,6 @@ public class OTelMetrics {
     attributes: [String: AttributeValue] = [:],
     loggingLevel: LoggingLevel = .detailed,
   ) {
-    guard currentLoggingLevel >= loggingLevel else {
-      return
-    }
     let openTelemetry = OpenTelemetry.instance
     
     let meter = openTelemetry.meterProvider.meterBuilder(name: metricsGroup).build()
@@ -85,9 +82,6 @@ public class OTelMetrics {
     attributes: [String: AttributeValue] = [:],
     loggingLevel: LoggingLevel = .detailed,
   ) {
-    guard currentLoggingLevel >= loggingLevel else {
-      return
-    }
     let openTelemetry = OpenTelemetry.instance
     
     let meter = openTelemetry.meterProvider.meterBuilder(name: metricsGroup).build()
@@ -116,9 +110,6 @@ public class OTelMetrics {
     attributes: [String: AttributeValue] = [:],
     loggingLevel: LoggingLevel = .detailed
   ) {
-    guard currentLoggingLevel >= loggingLevel else {
-      return
-    }
     let openTelemetry = OpenTelemetry.instance
     
     let meter = openTelemetry.meterProvider.meterBuilder(name: metricsGroup).build()

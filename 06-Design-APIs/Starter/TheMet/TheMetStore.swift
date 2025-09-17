@@ -42,17 +42,15 @@ class TheMetStore: ObservableObject {
   }
   
   func fetchObjects(for queryTerm: String) async throws {
-    try await withSpan("fetchObjects") { mainSpan in
-      if let objectIDs = try await service.getObjectIDs(from: queryTerm) {
-        for (index, objectID) in objectIDs.objectIDs.enumerated()
-        where index < maxIndex {
-          var object: Object?
-          object = try await service.getObject(from: objectID)
-          //            throw NSError(domain: "TheMetStore", code: 1, userInfo: nil)
-          if let object {
-            await MainActor.run {
-              objects.append(object)
-            }
+    if let objectIDs = try await service.getObjectIDs(from: queryTerm) {
+      for (index, objectID) in objectIDs.objectIDs.enumerated()
+      where index < maxIndex {
+        var object: Object?
+        object = try await service.getObject(from: objectID)
+        //            throw NSError(domain: "TheMetStore", code: 1, userInfo: nil)
+        if let object {
+          await MainActor.run {
+            objects.append(object)
           }
         }
       }

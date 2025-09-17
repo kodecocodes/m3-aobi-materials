@@ -78,7 +78,6 @@ public class OTelLogs {
     loggingLevel: LoggingLevel = .detailed,
     span: SpanType? = nil
   ) {
-    guard currentLoggingLevel >= loggingLevel else { return }
     let openTelemetry = OpenTelemetry.instance
     let otelLogger = openTelemetry.loggerProvider.loggerBuilder(instrumentationScopeName: scope).setEventDomain("Device") .build()
     let event = otelLogger.eventBuilder(name: "Event")
@@ -108,7 +107,6 @@ public class OTelLogs {
     loggingLevel: LoggingLevel = .detailed,
     span: SpanType? = nil
   ) {
-    guard currentLoggingLevel >= loggingLevel else { return }
     let openTelemetry = OpenTelemetry.instance
     let otelLogger = openTelemetry.loggerProvider.loggerBuilder(instrumentationScopeName: scope).setEventDomain("Device") .build()
     let log = otelLogger.logRecordBuilder()
